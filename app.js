@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 //引入routes.js路由文件
 const routes = require('./routes');
-
+//测试一下数据库连接是否成功
+const db = require('./model/db');
 const app = express();
 
 // view engine setup
