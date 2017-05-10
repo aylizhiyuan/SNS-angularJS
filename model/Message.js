@@ -26,20 +26,22 @@ const MessageSchema = new Schema({
         type:String,
         ref:'User' //关联用户表
     },
-    //回复
-    replyId:{
+    //被回复人的ID
+    replyAuthor:{
         type:String,
-        ref:'Reply'
+        ref:'User'
     },
+    //是不是针对某条留言进行回复的.
+    relationMsgId:String,
     //留言的对应文章
-    articleId:{
+    article_id:{
         type:String,
         ref:'Article'
     },
-    //是否已读
-    has_read:{
+    //点赞
+    praiseNum:{
         type:Number,
-        default:false
+        default:0
     }
 })
 const Message = mongoose.model('Message',MessageSchema);
