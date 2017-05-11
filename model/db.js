@@ -10,8 +10,8 @@ mongoose.connect(`mongodb://${setting.host}/${setting.db}`);
 const DbSet = {
     //新增操作
     addOne:(obj,req,res,logMsg)=>{
-        let obj = new obj(req.body);
-        obj.save().then(result=>{
+        let newObj = new obj(req.body);
+        newObj.save().then(result=>{
             res.end(logMsg);
         }).catch(err=>{
             res.end(err);
