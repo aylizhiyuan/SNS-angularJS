@@ -6,6 +6,7 @@ const home = require('./routes/home');
 const question = require('./routes/question');
 const user = require('./routes/user');
 const notify = require('./routes/notify');
+
 //---------------------------------首页-------------------------------------
 router.get('/',home.index);
 //登录
@@ -36,5 +37,10 @@ router.get('/user/:name/message',user.message);
 
 //------------------------------消息列表----------------------------------------
 router.get('/notify',notify.index)
+
+
+
+
+
 module.exports = router;
 

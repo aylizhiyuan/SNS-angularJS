@@ -4917,13 +4917,13 @@ body {
 
 .aw-login-box .logo {
     width: 94px!important;
-    background: url(../images/logo.png) no-repeat!important;
+    background: url(../images/bootstrap-logo.png) no-repeat!important;
     background-size: contain!important
 }
 
 .aw-register-box .mod-head {
     padding-top: 150px;
-    background: url(../images/logo.png) no-repeat;
+    background: url(../images/bootstrap-logo.png) no-repeat;
     background-position: center top;
     background-size: 120px 120px
 }
@@ -5003,14 +5003,5 @@ body {
     padding: 0 10px;
     color: #ccc;
     content: "|"
-}
-.short {
-    position: absolute;
-    bottom:0;
-    width:100%;
-}
-.long {
-    width:100%;
-    position: absolute;
 }
 
