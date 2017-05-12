@@ -7,8 +7,6 @@ const bodyParser = require('body-parser');
 const partials = require('express-partials');
 //引入routes.js路由文件
 const routes = require('./routes');
-//测试一下数据库连接是否成功
-const db = require('./model/db');
 const app = express();
 
 // view engine setup
@@ -25,8 +23,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //使用该路由规则
 app.use('/', routes);
-//存储一些默认的值
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   let err = new Error('Not Found');
