@@ -15,11 +15,13 @@ router.get('/login',home.login);
 router.get('/register',home.register);
 
 //-------------------------------问题页面--------------------------------
-router.get('/question/:id',question.index)
 //新建
 router.get('/question/create',question.create);
 //编辑
 router.get('/question/edit',question.edit);
+//详情
+router.get('/question/:id',question.index)
+
 
 //-------------------------------用户页面----------------------------------
 //个人设置
