@@ -91,7 +91,22 @@
                                         </span>
                                     </div>
                                     <!--回复的DIV留在这里，以后再做-->
-                                    <div class="aw-comment-box">留下做回复</div>
+                                    <div class="aw-comment-box">
+                                        <div class="aw-comment-list">
+                                            <div align="center" class="aw-padding10">暂无回复</div>
+                                            <form action="">
+                                                <div class="aw-comment-box-main">
+                                                    <textarea id="huifu" name="meg_content"></textarea>
+                                                    <div class="aw-comment-box-btn" style="display: block;">
+                                                        <span class="pull-right">
+                                                            <a class="btn btn-mini btn-success">评论</a>
+                                                            <a class="btn btn-mini btn-gray close-comment-box">取消</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +115,32 @@
                     <!--回复-->
                     <!--编辑器-->
                     <div class="aw-mod aw-replay-box">
-                        留下做编辑器位置
+                        <form action="">
+                            <div class="mod-head">
+                                <a href="#" class="aw-user-name">
+                                    <img src="/images/avatar-max-img.png">
+                                </a>
+                                <p>
+                                    李志远
+                                </p>
+                            </div>
+                            <div class="mod-body">
+                                <div class="aw-mod aw-editor-box">
+                                    <div class="mod-head" style="border:0">
+                                        <div class="wmd-panel">
+                                            <textarea id="liuyan"  name="anwer_content">
+
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="mod-body clearfix">
+                                        <span class="pull-right">
+                                            <a href="#" class="btn btn-normal btn-success">回复</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!--编辑器-->
                 </div>
@@ -164,3 +204,18 @@
         </div>
     </div>
 </div>
+<script>
+    var simplemde1 = new SimpleMDE({
+        element: $("#liuyan")[0] ,
+        status:false,
+        styleSelectedText:false,
+    });
+    var simplemde2 = new SimpleMDE({
+        element: $("#huifu")[0] ,
+        status:false,
+        styleSelectedText:false,
+    });
+   /* simplede.codemirror.on("change", function(){
+        console.log(simplede.value());
+    });*/
+</script>

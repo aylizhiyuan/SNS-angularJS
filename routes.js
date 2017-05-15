@@ -27,7 +27,7 @@ router.get('/setting',user.setting);
 //用户列表
 router.get('/users',user.all);
 //个人中心
-router.get('/user/:name',user.index)
+router.get('/user/:name',user.index);
 //用户发布问题的列表
 router.get('/user/:name/question',user.question);
 //用户回复的列表
@@ -36,7 +36,7 @@ router.get('/user/:name/message',user.message);
 //-----------------------------留言回复列表-------------------------------------
 
 //------------------------------消息列表----------------------------------------
-router.get('/notify',notify.index)
+router.get('/notify',notify.index);
 
 
 
