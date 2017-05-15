@@ -31,18 +31,15 @@ router.get('/users',user.all);
 //个人中心
 router.get('/user/:name',user.index);
 //用户发布问题的列表
-router.get('/user/:name/question',user.question);
+router.get('/user/:name/questions',user.questions);
 //用户回复的列表
-router.get('/user/:name/message',user.message);
+router.get('/user/:name/messages',user.messages);
 
 //-----------------------------留言回复列表-------------------------------------
 
 //------------------------------消息列表----------------------------------------
 router.get('/notify',notify.index);
-
-
-
-
-
 module.exports = router;
+
+
 
