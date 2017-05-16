@@ -13,6 +13,8 @@ router.get('/',home.index);
 router.get('/login',home.login);
 //注册
 router.get('/register',home.register);
+//注册行为
+router.post('/register',home.postRegister);
 
 //-------------------------------问题页面--------------------------------
 //新建

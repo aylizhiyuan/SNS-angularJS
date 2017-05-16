@@ -24,3 +24,10 @@ exports.register = (req,res,next)=>{
         resource:mapping.register
     })
 }
+exports.postRegister = (req,res,next)=>{
+    //1.后端验证数据
+    //2.判断一下用户名和邮箱是否存在
+    //3.密码加密处理
+    //4.存入数据库
+    //5.发邮件
+}
