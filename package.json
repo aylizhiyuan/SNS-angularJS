@@ -17,6 +17,7 @@
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.8",
-    "simplemde": "^1.11.2"
+    "simplemde": "^1.11.2",
+    "validator": "^7.0.0"
   }
 }
