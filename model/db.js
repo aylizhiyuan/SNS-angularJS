@@ -3,6 +3,8 @@
  */
 const mongoose = require('mongoose');
 const setting = require('../setting');
+//nodeJS加密模块
+const crypto = require('crypto');
 const url = require('url');
 //这句话说明我们使用的promise对象是ES6中原生的promise对象.
 mongoose.Promise = global.Promise;
@@ -56,6 +58,22 @@ const DbSet = {
         }).catch(err=>{
             res.end(err);
         })
+    },
+    //加密
+    encrypt : function(data,key){ // 密码加密
+        var cipher = crypto.createCipher("bf",key);
+        var newPsd = "";
+        newPsd += cipher.update(data,"utf8","hex");
+        newPsd += cipher.final("hex");
+        return newPsd;
+    },
+    decrypt : function(data,key){ //密码解密
+        var decipher = crypto.createDecipher("bf",key);
+        var oldPsd = "";
+        oldPsd += decipher.update(data,"hex","utf8");
+        oldPsd += decipher.final("utf8");
+        return oldPsd;
     }
+
 }
 module.exports = DbSet

@@ -6,6 +6,14 @@
 const mapping = require('../static');
 //引入表单验证
 const validator = require('validator');
+//引入User表
+const User = require('../model/User');
+//引入数据库连接文件
+const DbSet = require('../model/db');
+//引入配置文件
+const SETTING = require('../setting');
+//引入发送邮件的通用方法
+const mail = require('../common/mail');
 exports.index = (req,res,next)=>{
     res.render('index',{
         title:'首页--社区问答系统',
@@ -26,16 +34,103 @@ exports.register = (req,res,next)=>{
         resource:mapping.register
     })
 }
+// 注册行为
 exports.postRegister = (req,res,next)=>{
     //1.后端验证数据
     let name = req.body.name;
     let password = req.body.password;
     let email = req.body.email;
-    if(validator.matches(name,/asdf/,'g')){
-
+    let error;
+    if(!validator.matches(name,/^[a-zA-Z][a-zA-Z0-9_]{4,11}$/,'g')){
+        error = '用户名不合法,5-12位,数字字母下划线'
     }
-    //2.判断一下用户名和邮箱是否存在
-    //3.密码加密处理
-    //4.存入数据库
-    //5.发邮件
+    if(!validator.matches(password,/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{5,}/,'g') ||
+    !validator.isLength(password,6,12)){
+        error = '密码长度5-12位，非特殊字符'
+    }
+    if(!validator.isEmail(email)){
+        error = '邮箱的格式不正确'
+    }
+    //如果验证的有错误，那么发送这个错误的提示信息
+    if(error){
+        res.end(error);
+    }else{
+        //验证成功之后,判断一下用户名和邮箱是否存在
+        let query = User.find().or([{email:email},{name:name}]);
+        query.exec().then((user)=>{
+            if(user.length > 0){
+                error = '用户名/邮箱已存在';
+                res.end(error);
+            }else{
+                let regMsg = {name:name,email:email};
+                mail.sendEmail('reg_mail',regMsg,function(err,info){
+                    if(err){
+                        res.end(err);
+                    }
+                });
+                let newPSD = DbSet.encrypt(password,SETTING.PSDkey);
+                req.body.password = newPSD;
+                DbSet.addOne(User,req,res,'success');
+            }
+        }).catch((err)=>{
+            res.end(err);
+        })
+    }
+}
+//登录行为
+exports.postLogin = (req,res,next)=>{
+    let error;
+    let username = req.body.username;
+    let getEmail;
+    let getName;
+    let getUser;
+    let password = req.body.password;
+    username.includes('@') ? getEmail = username : getName = username;
+    if(getName){
+        if(!validator.matches(getName,/^[a-zA-Z][a-zA-Z0-9_]{4,11}$/,'g')){
+            error = '用户名格式不正确';
+        }
+    }
+    if(getEmail){
+        if(!validator.isEmail(getEmail)){
+            error = '邮箱格式不正确';
+        }
+    }
+    if(!validator.matches(password,/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{5,}/,'g')||
+        !validator.isLength(password,6,12)){
+        error = '密码格式不正确';
+    }
+    if(error){
+        res.end(error);
+    }else{
+        //根据邮箱来查用户 getUserByEmail
+        //根据用户名来查用户 getUserByName
+        if(getEmail){
+            getUser = User.getUserByEmail
+        }else{
+            getUser = User.getUserByName
+        }
+        getUser(username,(err,user)=>{
+            if(err){
+                res.end(err);
+            }
+            //你根据邮箱或者是用户名查到的用户信息
+            if(!user){
+                res.end('用户名/邮箱不存在');
+            }else{
+                //判断密码是否一样
+                let newPSD = DbSet.encrypt(password,SETTING.PSDkey);
+                if(user.password !== newPSD){
+                    res.end('密码错误,请重新输入');
+                }
+                res.end('success');
+            }
+        })
+    }
+    //1.验证
+    //2.判断一下是用户名登录还是邮箱登录
+    //3.查找用户名或者邮箱是否存在
+    //4.对应的密码是否一致
+    //5.登录后，创建cookie,通过cookie生成session，完成最后的登录
+
 }

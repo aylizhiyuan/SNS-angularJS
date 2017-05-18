@@ -39,12 +39,20 @@
                         <input type="checkbox" checked="checked" value="agree" name="" required>我同意
                     </label>
                     <a href="#">用户协议</a>
-                    <a href="#" class="pull-right">已有账号</a>
+                    <a href="/login" class="pull-right">已有账号</a>
                 </li>
                 <li class="clearfix">
                     <input type="submit" ng-disabled="regForm.$invalid" value="注册" class="btn btn-large btn-blue btn-block">
                 </li>
             </ul>
         </form>
+    </div>
+    <div class="mod-footer" style="height:40px;">
+        <div ng-show="error" id="errorbox" ng-cloak class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        <div ng-show="success" id="successbox" ng-cloak class="alert alert-success" role="alert">
+            {{success}}
+        </div>
     </div>
 </div>

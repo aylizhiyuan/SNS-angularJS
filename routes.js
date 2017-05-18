@@ -15,6 +15,8 @@ router.get('/login',home.login);
 router.get('/register',home.register);
 //注册行为
 router.post('/register',home.postRegister);
+//登录行为
+router.post('/login',home.postLogin);
 
 //-------------------------------问题页面--------------------------------
 //新建

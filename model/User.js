@@ -18,8 +18,8 @@ const UserSchema = new Schema({
         require:true
     },
     //密码
-    passwrod:{
-        type:Number,
+    password:{
+        type:String,
         require:true
     },
     //邮箱
@@ -42,6 +42,18 @@ const UserSchema = new Schema({
         default:Date.now
     }
 })
+//为这个user表添加静态方法
+UserSchema.statics = {
+    getUserByName:(name,callback)=>{
+        User.findOne({'name':name},callback);
+    },
+    getUserByEmail:(email,callback)=>{
+        User.findOne({'email':email},callback);
+    },
+    getUserById:(id,callback)=>{
+        User.findOne({'_id':id},callback);
+    }
+}
 const User = mongoose.model('User',UserSchema);
 module.exports = User;
 

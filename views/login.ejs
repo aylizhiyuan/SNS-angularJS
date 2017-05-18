@@ -1,33 +1,42 @@
-<div id="wrapper">
+<div id="wrapper" ng-app="loginApp" ng-controller="loginController">
     <div class="aw-login-box">
         <div class="mod-body clearfix">
             <div class="content pull-left">
                 <h1 class="logo"></h1>
                 <h2>基于nodeJS的社区系统</h2>
-                <form id="login_form" method="post">
+                <form name="loginForm" method="post" ng-submit="postForm()">
                     <ul>
                         <li>
-                            <input type="text" id="aw-login-user-name" class="form-control" placeholder="邮箱 / 用户名" name="user_name">
+                            <input type="text" class="form-control" placeholder="邮箱 / 用户名" name="username" ng-model="formData.username" ng-pattern="/(^[a-zA-Z][a-zA-Z0-9_]{4,11}$)|(^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$)/" required>
+                            <div style="height:30px;">
+                                <span ng-cloak ng-show="loginForm.username.$invalid && !loginForm.username.$pristine" class="text-danger">邮箱/用户名不合法</span>
+                            </div>
                         </li>
                         <li>
-                            <input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password" />
-                        </li>
-                        <li class="alert alert-danger hide error_message">
-                            <i class="fa fa-remove"></i><em></em>
+                            <input type="password" ng-model="formData.password" ng-pattern="/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{5,}/" ng-maxlength="12" class="form-control" placeholder="密码" name="password" required>
+                            <div style="height:30px">
+                                <span ng-cloak ng-show="loginForm.password.$invalid && !loginForm.password.$pristine" class="text-danger">密码格式不正确</span>
+                            </div>
                         </li>
                         <li class="last">
-                            <a href="javascript:void(0)" class="pull-right btn btn-large btn-primary">登录</a>
-                            <input id="login-radio" type="checkbox" value="1" name="net_auto_login">
+                            <input ng-disabled="loginForm.$invalid" class="pull-right btn btn-large btn-primary" type="submit" value="登录">
+                            <input id="login-radio" type="checkbox" value="1" name="net_auto_login" required checked="checked">
                             <label for="login-radio">记住我</label>
-                            <a href="#">&nbsp;&nbsp;忘记密码</a>
+                            <a style="color:#59b0ff" href="#">&nbsp;&nbsp;忘记密码</a>
                         </li>
                     </ul>
                 </form>
             </div>
-            <div class="side-bar pull-left">
+            <div class="side-bar  pull-left">
                 <h3>第三方账号登录</h3>
                 <a href="#" class="btn btn-block btn-weibo"><i class="icon icon-weibo"></i> 新浪微博登录</a>
                 <a href="#" class="btn btn-block btn-qq"> <i class="icon icon-qq"></i> QQ登录</a>
+            </div>
+            <div class="clearfix"></div>
+            <div style="line-height: 30px; height:30px;margin-top:20px;">
+                <div id="errorbox" ng-show="error" class="alert text-center alert-danger">
+                    {{error}}
+                </div>
             </div>
         </div>
         <div class="mod-footer">
