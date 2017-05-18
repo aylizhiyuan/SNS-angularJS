@@ -14,6 +14,8 @@ const DbSet = require('../model/db');
 const SETTING = require('../setting');
 //引入发送邮件的通用方法
 const mail = require('../common/mail');
+//引入生成cookie
+const auth = require('../common/auth');
 exports.index = (req,res,next)=>{
     res.render('index',{
         title:'首页--社区问答系统',
@@ -123,6 +125,8 @@ exports.postLogin = (req,res,next)=>{
                 if(user.password !== newPSD){
                     res.end('密码错误,请重新输入');
                 }
+                //生成cookie
+                auth.gen_session(user,res);
                 res.end('success');
             }
         })

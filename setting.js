@@ -18,5 +18,8 @@ module.exports = {
     },
     //社区名称
     name:'nodeJS社区问答系统',
-
+    //cookie的名称
+    auth_cookie_name:'nodejs-ask',
+    //cookie加密
+    cookie_secret:'nodejs-ask'
 }
