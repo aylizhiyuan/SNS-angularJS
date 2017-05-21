@@ -136,5 +136,10 @@ exports.postLogin = (req,res,next)=>{
     //3.查找用户名或者邮箱是否存在
     //4.对应的密码是否一致
     //5.登录后，创建cookie,通过cookie生成session，完成最后的登录
-
+}
+//用户的登录是根据cookie去生成session的，如果用户已经登录了
+exports.logout = (req,res,next)=>{
+    req.session.destroy();
+    res.clearCookie(SETTING.auth_cookie_name);
+    res.redirect('/');
 }

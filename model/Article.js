@@ -4,6 +4,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
+const SETTING = require('../setting');
 const ArticleSchema = new Schema({
     _id:{
         type:String,
@@ -21,26 +22,33 @@ const ArticleSchema = new Schema({
         require:true
     },
     //创建时间
-    createtime:{
+    create_time:{
         type:Date,
         default:Date.now
     },
     //修改时间
-    updatetime:{
+    update_time:{
         type:Date,
         default:Date.now
     },
     //标签
     tags:String,
     //点击量
-    clickNum:{
+    click_num:{
         type:Number,
         default:0,
         min:0,
         max:100000
     },
     //回复量
-    commentNum:{
+    comment_num:{
+        type:Number,
+        default:0,
+        min:0,
+        max:100000
+    },
+    //关注量
+    follow_num:{
         type:Number,
         default:0,
         min:0,
@@ -53,8 +61,30 @@ const ArticleSchema = new Schema({
     },
     //文章的分类
     category:{
+        type:String
+    },
+    //最后回复的人
+    last_reply:{
         type:String,
-        ref:'Category' //文章的分类
+        ref:'User' //最后回复的人
+    },
+    //最后回复的时间
+    last_reply_time:{
+        type:Date,
+        default:Date.now
+    }
+})
+ArticleSchema.virtual('category').get(()=>{
+    //当前存储的分类
+    let category = this.category;
+    let pair ;
+    //查看下当前存储的分类是不是合法的分类
+    for(let item of SETTING.categorys){
+        if(item[0] === category){
+            return item[1];
+        }else{
+            return '';
+        }
     }
 })
 const Article = mongoose.model('Article',ArticleSchema);

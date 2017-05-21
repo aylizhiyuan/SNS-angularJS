@@ -6,6 +6,7 @@ const home = require('./routes/home');
 const question = require('./routes/question');
 const user = require('./routes/user');
 const notify = require('./routes/notify');
+const auth = require('./common/auth');
 
 //---------------------------------首页-------------------------------------
 router.get('/',home.index);
@@ -17,12 +18,14 @@ router.get('/register',home.register);
 router.post('/register',home.postRegister);
 //登录行为
 router.post('/login',home.postLogin);
+//退出
+router.get('/logout',home.logout);
 
 //-------------------------------问题页面--------------------------------
 //新建
-router.get('/question/create',question.create);
+router.get('/question/create',auth.userRequired,question.create);
 //编辑
-router.get('/question/edit',question.edit);
+router.get('/question/edit',auth.userRequired,question.edit);
 //详情
 router.get('/question/:id',question.index)
 

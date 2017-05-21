@@ -36,6 +36,12 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 //使用该路由规则
 app.use(auth.authUser);
+//存储一下本地的信息
+app.use((req,res,next)=>{
+    res.locals.isLogin = req.session.isLogin;
+    res.locals.userInfo = req.session.user;
+    next();
+})
 app.use('/', routes);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

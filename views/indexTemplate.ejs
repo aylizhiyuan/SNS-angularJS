@@ -50,17 +50,68 @@
                     <ul class="nav navbar-nav">
                         <li><a href="#" class="active"><i class="fa fa-id-card"></i> 发现</a></li>
                         <li><a href="#"><i class="fa fa-male"></i> 话题</a></li>
+                        <% if ( userInfo ){ %>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-bell-o"></i>通知
+                            </a>
+                            <span class="badge badge-important">0</span>
+                            <div class="aw-dropdown pull-right hidden-xs">
+                                <div class="mod-body">
+                                    <ul id="header_notification_list">
+                                        <p class="aw-padding10" align="center">没有未读通知</p>
+                                    </ul>
+                                </div>
+                                <div class="mod-footer">
+                                    <a href="#">查看全部</a>
+                                </div>
+                            </div>
+                        </li>
+                        <% } %>
                     </ul>
                 </nav>
             </div>
             <!--导航-->
             <!--登录注册-->
             <div class="aw-user-nav">
-            <span>
-                <a class="register btn btn-normal btn-success" href="/register">注册</a>
-                <a class="login btn btn-normal btn-primary" href="/login">登录</a>
-            </span>
+                <% if(!userInfo){ %>
+                <span>
+                    <a class="register btn btn-normal btn-success" href="/register">注册</a>
+                    <a class="login btn btn-normal btn-primary" href="/login">登录</a>
+                </span>
+                <% }else{ %>
+                 <a href="#" class="aw-user-nav-dropdown">
+                     <img src="/images/default-avatar.jpg">
+                 </a>
+                 <div class="aw-dropdown dropdown-list pull-right">
+                     <ul class="aw-dropdown-list">
+                         <li class="hidden-xs">
+                             <a href="/setting">
+                                 <i class="fa fa-cogs"></i>
+                                 设置
+                             </a>
+                         </li>
+                         <li>
+                             <a href="/logout">
+                                 <i class="fa fa-sign-out"></i>
+                                 退出
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+                <% } %>
             </div>
+            <!--登录注册-->
+            <!--发表文章-->
+            <% if(userInfo){ %>
+            <div class="aw-publish-btn">
+                <a id="header_publish" href="/question/create" class="btn-primary">
+                    <i class="fa fa-book"></i>
+                    发起
+                </a>
+            </div>
+            <% } %>
+            <!--发表文章-->
         </div>
     </div>
     <%- body %>

@@ -3,6 +3,7 @@
  */
 //引入静态
 const mapping = require('../static');
+const SETTING = require('../setting');
 exports.index = (req,res,next)=>{
     res.render('question',{
         title:'问题--社区问答系统',
@@ -12,7 +13,8 @@ exports.index = (req,res,next)=>{
 exports.create = (req,res,next)=>{
     res.render('create-question',{
         title:'新建--社区问答系统',
-        layout:'indexTemplate'
+        layout:'indexTemplate',
+        categorys:SETTING.categorys
     })
 }
 exports.edit = (req,res,next)=>{

@@ -21,5 +21,11 @@ module.exports = {
     //cookie的名称
     auth_cookie_name:'nodejs-ask',
     //cookie加密
-    cookie_secret:'nodejs-ask'
+    cookie_secret:'nodejs-ask',
+    // 版块
+    categorys: [
+        ['share', '分享'],
+        ['ask', '问答'],
+        ['job', '招聘'],
+    ],
 }
