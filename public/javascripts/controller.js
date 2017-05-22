@@ -62,3 +62,22 @@ loginApp.controller('loginController',($scope,$http)=>{
 
     }
 })
+//新建问题模块
+var createApp = angular.module('createApp',[]);
+createApp.controller('createController',($scope,$http)=>{
+    $scope.isEmpty = false;
+    var simplemde = new SimpleMDE({
+        element: $("#question")[0],
+        status:false,
+        styleSelectedText:false,
+    });
+    simplemde.codemirror.on("change", function(){
+        if(simplemde.value() == ''){
+            $scope.isEmpty = false;
+            $scope.$apply('');
+        }else{
+            $scope.isEmpty = true;
+            $scope.$apply('');
+        }
+    });
+})
