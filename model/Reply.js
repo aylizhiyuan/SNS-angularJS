@@ -4,7 +4,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = requrie('shortid');
-const MessageSchema = new Schema({
+const ReplySchema = new Schema({
     _id:{
         type:String,
         default:shortid.generate,
@@ -17,7 +17,7 @@ const MessageSchema = new Schema({
         default:'请输入留言的内容...'
     },
     //留言的时间
-    createtime:{
+    create_time:{
         type:Date,
         default:Date.now
     },
@@ -44,5 +44,5 @@ const MessageSchema = new Schema({
         default:0
     }
 })
-const Message = mongoose.model('Message',MessageSchema);
-module.exports = Message
+const Reply = mongoose.model('Reply',ReplySchema);
+module.exports = Reply

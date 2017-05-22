@@ -37,10 +37,31 @@ const UserSchema = new Schema({
         default:'/public/images/default-avatar.jpg'
     },
     //创建时间
-    createtime:{
+    create_time:{
         type:Date,
         default:Date.now
+    },
+    //更新时间
+    update_time:{
+        type:Date,
+        default:Date.now
+    },
+    //用户的积分
+    score:{
+        type:Number,
+        default:0
+    },
+    //发表文章数量
+    article_count:{
+        type:Number,
+        default:0
+    },
+    //回复的数量
+    reply_count:{
+        type:Number,
+        default:0
     }
+    //关注的人和被关注的人待开发...
 })
 //为这个user表添加静态方法
 UserSchema.statics = {
