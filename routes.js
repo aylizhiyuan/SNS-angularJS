@@ -24,6 +24,8 @@ router.get('/logout',home.logout);
 //-------------------------------问题页面--------------------------------
 //新建
 router.get('/question/create',auth.userRequired,question.create);
+//新建的行为
+router.post('/question/create',auth.userRequired,question.postCreate);
 //编辑
 router.get('/question/edit',auth.userRequired,question.edit);
 //详情

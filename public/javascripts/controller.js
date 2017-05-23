@@ -65,7 +65,9 @@ loginApp.controller('loginController',($scope,$http)=>{
 //新建问题模块
 var createApp = angular.module('createApp',[]);
 createApp.controller('createController',($scope,$http)=>{
+    $scope.formData = {};
     $scope.isEmpty = false;
+    $scope.error = '';
     var simplemde = new SimpleMDE({
         element: $("#question")[0],
         status:false,
@@ -80,4 +82,25 @@ createApp.controller('createController',($scope,$http)=>{
             $scope.$apply('');
         }
     });
+    $scope.postForm = ()=>{
+        $scope.formData.content = simplemde.value();
+        $http({
+            method:'POST',
+            url:'/question/create',
+            data:$.param($scope.formData),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        }).success(data=>{
+            if(data == 'success'){
+                console.log(data);
+            }else{
+                $scope.error = data;
+                $('#errorbox').fadeIn();
+                setTimeout(function(){
+                    $('#errorbox').fadeOut();
+                },1000)
+            }
+        }).error(err=>{
+            console.log(err);
+        })
+    }
 })

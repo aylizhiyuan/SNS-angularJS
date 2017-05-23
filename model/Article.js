@@ -74,7 +74,7 @@ const ArticleSchema = new Schema({
         default:Date.now
     }
 })
-ArticleSchema.virtual('category').get(()=>{
+ArticleSchema.virtual('fenlei').get(()=>{
     //当前存储的分类
     let category = this.category;
     let pair ;
@@ -87,6 +87,10 @@ ArticleSchema.virtual('category').get(()=>{
         }
     }
 })
+ArticleSchema.static = {
+
+
+}
 const Article = mongoose.model('Article',ArticleSchema);
 module.exports = Article
 

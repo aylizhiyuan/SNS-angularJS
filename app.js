@@ -29,9 +29,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(SETTING.cookie_secret));
 app.use(session({
     //给session设置一些参数
-    secret:SETTING.cookie_secret, //是给session加密的.
+    secret:SETTING.cookie_secret, //是给session加密的.通常应该是session存储的时候进行加密
     resave:true,
     saveUninitialized:true
+    //这里暂时没有给session放入到redis或者是数据库里面去，因为感觉没有必要性.
 }))
 app.use(express.static(path.join(__dirname, 'public')));
 //使用该路由规则

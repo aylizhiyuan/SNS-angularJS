@@ -47,7 +47,7 @@
                                 <h3>问题补充:</h3>
                                 <div class="aw-mod aw-editor-box">
                                     <div class="mod-head">
-                                        <textarea placeholder="问题支持markdown格式,请注意标记代码" ng-model="formData.content" id="question" name="content"></textarea>
+                                        <textarea placeholder="问题支持markdown格式,请注意标记代码" id="question"></textarea>
                                     </div>
                                     <div class="mod-body">
                                        <div style="height:20px">
@@ -58,6 +58,11 @@
                             </div>
                             <div class="mod-footer clearfix">
                                 <input ng-disabled="createForm.$invalid || !isEmpty" class="btn btn-large btn-success" type="submit" value="发布问题">
+                            </div>
+                            <div style="height:34px;margin-top:20px">
+                                <div ng-cloak id="errorbox" ng-show="error" class="alert text-center alert-danger">
+                                    {{error}}
+                                </div>
                             </div>
                         </div>
                     </form>
