@@ -75,6 +75,11 @@ UserSchema.statics = {
         User.findOne({'_id':id},callback);
     }
 }
+UserSchema.pre('save', function(next){
+    var now = new Date();
+    this.update_time = now;
+    next();
+});
 const User = mongoose.model('User',UserSchema);
 module.exports = User;
 

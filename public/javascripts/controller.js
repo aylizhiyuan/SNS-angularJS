@@ -90,8 +90,8 @@ createApp.controller('createController',($scope,$http)=>{
             data:$.param($scope.formData),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success(data=>{
-            if(data == 'success'){
-                console.log(data);
+            if(typeof data === 'object'){
+                window.location.href = data.url;
             }else{
                 $scope.error = data;
                 $('#errorbox').fadeIn();
