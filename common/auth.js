@@ -4,6 +4,7 @@
 
 const SETTING = require('../setting');
 const User = require('../model/User');
+const Message = require('../model/Message');
 const auth = {
     //判断用户是否具备操作权限的检测
     userRequired:(req,res,next)=>{
@@ -24,8 +25,11 @@ const auth = {
     //使用cookie生成session,保留用户的登录状态
     authUser:(req,res,next)=>{
         if(req.session.user){
-            req.session.isLogin = true;
-            next();
+            Message.getMessagesCount(req.session.user._id,(count)=>{
+                req.session.msg_count = count;
+                req.session.isLogin = true;
+                next();
+            })
         }else{
             //用户第一次登录的时候，通过客户端带来的cookie信息来生成session
             //读取用户的cookie信息,这次读取的时候是以解密的形式读取的.
@@ -43,9 +47,12 @@ const auth = {
                         if(!user){
                             return next();
                         }
-                        req.session.user = user;
-                        req.session.isLogin = true;
-                        return next();
+                        Message.getMessagesCount(user_id,(err,count)=>{
+                            req.session.msg_count = count;
+                            req.session.user = user;
+                            req.session.isLogin = true;
+                            return next();
+                        })
                     }
                 })
             }

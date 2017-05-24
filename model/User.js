@@ -73,6 +73,12 @@ UserSchema.statics = {
     },
     getUserById:(id,callback)=>{
         User.findOne({'_id':id},callback);
+    },
+    getUsersByNames:(names,callback)=>{
+        if(names.length == 0){
+            return callback(null,[]);
+        }
+        User.find({'name':{$in:names}},callback);
     }
 }
 UserSchema.pre('save', function(next){

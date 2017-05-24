@@ -8,6 +8,7 @@ const validator = require('validator');
 const DbSet = require('../model/db');
 const Article = require('../model/Article');
 const User = require('../model/User');
+const at = require('../common/at');
 //这里使用了缓存的技术
 const cache = require('../util/cache');
 exports.index = (req,res,next)=>{
@@ -55,16 +56,17 @@ exports.postCreate = (req,res,next)=>{
     }else{
         req.body.author = req.session.user._id;
         let newObj = new Article(req.body);
-        newObj.save().then(result=>{
+        newObj.save().then(article=>{
             //发布成功后，对应的用户的积分和发布文章数量+1
             User.getUserById(req.session.user._id,(err,user)=>{
-                console.log(user);
                 user.score += 5;
                 user.article_count += 1;
                 user.save();
                 req.session.user = user;
-                res.json({url:`/question/${result._id}`});
+                res.json({url:`/question/${article._id}`});
             })
+            //发送at消息
+            at.sendMessageToMentionUsers(content,article._id,req.session.user._id);
         }).catch(err=>{
             res.end(err);
         })

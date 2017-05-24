@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth.authUser);
 //存储一下本地的信息
 app.use((req,res,next)=>{
+    res.locals.msg_count = req.session.msg_count;
     res.locals.isLogin = req.session.isLogin;
     res.locals.userInfo = req.session.user;
     next();

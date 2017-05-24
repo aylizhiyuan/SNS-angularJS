@@ -55,7 +55,9 @@
                             <a href="#">
                                 <i class="fa fa-bell-o"></i>通知
                             </a>
-                            <span class="badge badge-important">0</span>
+                            <% if(msg_count){%>
+                            <span class="badge badge-important"><%= msg_count %></span>
+                            <% } %>
                             <div class="aw-dropdown pull-right hidden-xs">
                                 <div class="mod-body">
                                     <ul id="header_notification_list">
