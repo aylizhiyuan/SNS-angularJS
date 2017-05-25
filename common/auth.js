@@ -13,6 +13,13 @@ const auth = {
         }
         next();
     },
+    //判断用户是否是登录状态，如果是登录状态，不能让用户访问剩余的页面
+    userNotRequired:(req,res,next)=>{
+      if(req.session.isLogin == true){
+          return res.status(403).send('已经登录了，请返回操作');
+      }
+      next();
+    },
     //生成cookie
     gen_session:(user,res)=>{
         //生成一个对应的值
@@ -25,7 +32,7 @@ const auth = {
     //使用cookie生成session,保留用户的登录状态
     authUser:(req,res,next)=>{
         if(req.session.user){
-            Message.getMessagesCount(req.session.user._id,(count)=>{
+            Message.getMessagesCount(req.session.user._id,(err,count)=>{
                 req.session.msg_count = count;
                 req.session.isLogin = true;
                 next();

@@ -32,9 +32,9 @@ exports.questions = (req,res,next)=>{
         resource:mapping.center
     })
 }
-exports.messages = (req,res,next)=>{
+exports.replys = (req,res,next)=>{
     //用户发布的所有的回复列表
-    res.render('message-list',{
+    res.render('reply-list',{
         title:'用户回复列表--社区问答系统',
         layout:'indexTemplate',
         resource:mapping.center

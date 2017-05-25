@@ -14,6 +14,11 @@ const MessageSchema = new Schema({
      * follow: xx 关注了你
      * at: xx ＠了你
      */
+    _id:{
+        type:String,
+        default:shortid.generate,
+        unique:true
+    },
     type: { type: String },
     //消息发给谁
     target_id: { type: String,ref:'User'},
@@ -31,7 +36,6 @@ MessageSchema.statics = {
     getMessagesCount : (id,callback)=>{
         Message.count({"target_id":id,"has_read":false},callback);
     }
-
 }
 const Message = mongoose.model('Message',MessageSchema);
 module.exports = Message

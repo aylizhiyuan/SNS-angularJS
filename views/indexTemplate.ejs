@@ -52,13 +52,13 @@
                         <li><a href="#"><i class="fa fa-male"></i> 话题</a></li>
                         <% if ( userInfo ){ %>
                         <li>
-                            <a href="#">
+                            <a href="/my/messages">
                                 <i class="fa fa-bell-o"></i>通知
                             </a>
                             <% if(msg_count){%>
                             <span class="badge badge-important"><%= msg_count %></span>
                             <% } %>
-                            <div class="aw-dropdown pull-right hidden-xs">
+                            <!--<div class="aw-dropdown pull-right hidden-xs">
                                 <div class="mod-body">
                                     <ul id="header_notification_list">
                                         <p class="aw-padding10" align="center">没有未读通知</p>
@@ -67,7 +67,7 @@
                                 <div class="mod-footer">
                                     <a href="#">查看全部</a>
                                 </div>
-                            </div>
+                            </div>-->
                         </li>
                         <% } %>
                     </ul>

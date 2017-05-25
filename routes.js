@@ -5,15 +5,15 @@ const home = require('./routes/home');
 //引入问题的路由文件
 const question = require('./routes/question');
 const user = require('./routes/user');
-const notify = require('./routes/notify');
+const message = require('./routes/message');
 const auth = require('./common/auth');
 
 //---------------------------------首页-------------------------------------
 router.get('/',home.index);
 //登录
-router.get('/login',home.login);
+router.get('/login',auth.userNotRequired,home.login);
 //注册
-router.get('/register',home.register);
+router.get('/register',auth.userNotRequired,home.register);
 //注册行为
 router.post('/register',home.postRegister);
 //登录行为
@@ -42,12 +42,12 @@ router.get('/user/:name',user.index);
 //用户发布问题的列表
 router.get('/user/:name/questions',user.questions);
 //用户回复的列表
-router.get('/user/:name/messages',user.messages);
+router.get('/user/:name/replys',user.replys);
 
 //-----------------------------留言回复列表-------------------------------------
 
 //------------------------------消息列表----------------------------------------
-router.get('/notify',notify.index);
+router.get('/my/messages',auth.userRequired,message.index);
 module.exports = router;
 
 
