@@ -1,4 +1,4 @@
-<div class="aw-container-wrap">
+<div class="aw-container-wrap" ng-app="messageApp" ng-controller="messageController">
     <div class="container">
         <div class="row">
             <div class="aw-content-wrap clearfix">
@@ -22,39 +22,40 @@
                             <div class="tab-pane active" id="noread">
                                 <div class="aw-mod">
                                     <div class="mod-head">
+                                        <% if (not_read && not_read.length > 0){%>
+                                        <h3>
+                                            <a ng-click="allRead()" class="btn  btn-success">全部已读</a>
+                                        </h3>
+                                        <%}else{%>
                                         <h3>未读消息</h3>
+                                        <%}%>
                                     </div>
                                     <div class="mod-body">
-                                        <div class="aw-item">
-                                            <p>
-                                                <span class="pull-right text-color-999">2天前</span>
-                                                <em class="pull-left">
-                                                    <a href="#" class="aw-user-name">李志远</a>
-                                                    回答了问题
-                                                </em>
-                                                <a href="#" class="aw-hide-txt">请问这个东西应该怎么解决</a>
-                                            </p>
-                                        </div>
-                                        <div class="aw-item">
-                                            <p>
-                                                <span class="pull-right text-color-999">2天前</span>
-                                                <em class="pull-left">
-                                                    <a href="#" class="aw-user-name">李志远</a>
-                                                    回答了问题
-                                                </em>
-                                                <a href="#" class="aw-hide-txt">请问这个东西应该怎么解决</a>
-                                            </p>
-                                        </div>
-                                        <div class="aw-item">
-                                            <p>
-                                                <span class="pull-right text-color-999">2天前</span>
-                                                <em class="pull-left">
-                                                    <a href="#" class="aw-user-name">李志远</a>
-                                                    回答了问题
-                                                </em>
-                                                <a href="#" class="aw-hide-txt">请问这个东西应该怎么解决</a>
-                                            </p>
-                                        </div>
+                                        <%if (not_read && not_read.length > 0){%>
+                                        <% not_read.forEach(function(message,index){%>
+                                            <%if (message.type == 'at'){%>
+                                                <div class="aw-item" id="<%= index %>" message_id="<%= message._id %>">
+                                                    <p>
+                                                        <span class="pull-right text-color-999">
+                                                            <a ng-click="readOne(<%= index %>)" class="btn btn-mini btn-primary">
+                                                                确认已读
+                                                            </a>
+                                                        </span>
+                                                        <em class="pull-left">
+                                                            <a href="#" class="aw-user-name"><%= message.author_id.name %></a>
+                                                            @了你在问题
+                                                        </em>
+                                                        <a href="#" class="aw-hide-txt"><%= message.article_id.title %></a>
+                                                    </p>
+                                                </div>
+                                            <%}else if(message.type == 'reply'){%>
+                                            <%}else if(message.type == 'reply2'){%>
+                                            <%}else if(message.type == 'follow'){%>
+                                            <%}%>
+                                        <%})%>
+                                        <%}else{%>
+                                        <p align="center">没有未读消息</p>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
@@ -64,36 +65,27 @@
                                         <h3>已读消息</h3>
                                     </div>
                                     <div class="mod-body">
-                                        <div class="aw-item">
-                                            <p>
-                                                <span class="pull-right text-color-999">2天前</span>
-                                                <em class="pull-left">
-                                                    <a href="#" class="aw-user-name">李志远</a>
-                                                    回答了问题
-                                                </em>
-                                                <a href="#" class="aw-hide-txt">请问这个东西应该怎么解决</a>
-                                            </p>
-                                        </div>
-                                        <div class="aw-item">
-                                            <p>
-                                                <span class="pull-right text-color-999">2天前</span>
-                                                <em class="pull-left">
-                                                    <a href="#" class="aw-user-name">李志远</a>
-                                                    回答了问题
-                                                </em>
-                                                <a href="#" class="aw-hide-txt">请问这个东西应该怎么解决</a>
-                                            </p>
-                                        </div>
-                                        <div class="aw-item">
-                                            <p>
-                                                <span class="pull-right text-color-999">2天前</span>
-                                                <em class="pull-left">
-                                                    <a href="#" class="aw-user-name">李志远</a>
-                                                    回答了问题
-                                                </em>
-                                                <a href="#" class="aw-hide-txt">请问这个东西应该怎么解决</a>
-                                            </p>
-                                        </div>
+                                        <%if(read && read.length > 0){%>
+                                        <% read.forEach(function(message,index){%>
+                                            <%if (message.type == 'at'){%>
+                                            <div class="aw-item" message_id="<%= message._id %>">
+                                                <p>
+                                                    <span class="pull-right text-color-999"></span>
+                                                    <em class="pull-left">
+                                                        <a href="#" class="aw-user-name"><%= message.author_id.name %></a>
+                                                        @了你在问题
+                                                    </em>
+                                                    <a href="#" class="aw-hide-txt"><%= message.article_id.title %></a>
+                                                </p>
+                                            </div>
+                                            <%}else if(message.type == 'reply'){%>
+                                            <%}else if(message.type == 'reply2'){%>
+                                            <%}else if(message.type == 'follow'){%>
+                                            <%}%>
+                                        <%})%>
+                                        <%}else{%>
+                                        <p align="center">没有已读的消息</p>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>

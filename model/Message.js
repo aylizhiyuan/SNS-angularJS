@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const shortid = require('shortid');
 const User = require('./User');
 const Article = require('./Article');
+const Reply = require('./Reply');
 const MessageSchema = new Schema({
     /*
      * type:
@@ -27,7 +28,7 @@ const MessageSchema = new Schema({
     //文章的ID
     article_id: { type: String,ref:'Article'},
     //回复的ID
-    reply_id: { type: String },
+    reply_id: { type: String,ref:'Reply'},
     has_read: { type: Boolean, default: false },
     create_at: { type: Date, default: Date.now }
 })
@@ -35,6 +36,22 @@ MessageSchema.statics = {
     //根据用户的ID来获取未读消息的数量
     getMessagesCount : (id,callback)=>{
         Message.count({"target_id":id,"has_read":false},callback);
+    },
+    //根据用户的ID来获取未读消息的列表
+    getUnreadMessage :(id,callback)=>{
+        Message.find({"target_id":id,"has_read":false},null,{sort:'-create_at'}).populate('author_id').populate('article_id').populate('reply_id').exec(callback);
+    },
+    //根据用户的ID来获取已读消息的列表
+    getReadMessage:(id,callback)=>{
+        Message.find({"target_id":id,"has_read":true},null,{sort:'-create_at',limit:20}).populate('author_id').populate('article_id').populate('reply_id').exec(callback);
+    },
+    //将某个消息设置为已读
+    updateMessage :(id,callback)=>{
+        Message.update({'_id':id},{$set:{'has_read':true}}).exec(callback);
+    },
+    //将某个用户的所有消息设置为已读
+    updateAllMessage:(user_id,callback)=>{
+        Message.update({'target_id':user_id},{$set:{'has_read':true}},{multi:true}).exec(callback);
     }
 }
 const Message = mongoose.model('Message',MessageSchema);

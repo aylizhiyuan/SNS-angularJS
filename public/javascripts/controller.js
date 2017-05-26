@@ -104,3 +104,37 @@ createApp.controller('createController',($scope,$http)=>{
         })
     }
 })
+//消息列表
+var messageApp = angular.module('messageApp',[]);
+messageApp.controller('messageController',($scope,$http)=>{
+    $scope.readOne = (index)=>{
+        let messageId = $('.aw-item').eq(index).attr('message_id');
+        console.log(messageId);
+        $http({
+            method:'GET',
+            url:'/updateMessage/'+ messageId
+        }).success((data)=>{
+            if(data == 'success'){
+                $('.aw-item').eq(index).fadeOut('slow');
+            }else{
+                console.log(data);
+            }
+        }).error((err)=>{
+            console.log(err);
+        })
+    }
+    $scope.allRead = ()=>{
+        $http({
+            method:'GET',
+            url:'/updateAllMessage'
+        }).success((data)=>{
+            if(data == 'success'){
+                $('.aw-item').fadeOut('slow');
+            }else{
+                console.log(data);
+            }
+        }).error((err)=>{
+            console.log(err);
+        })
+    }
+})

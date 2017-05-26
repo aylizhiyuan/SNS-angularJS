@@ -48,6 +48,8 @@ router.get('/user/:name/replys',user.replys);
 
 //------------------------------消息列表----------------------------------------
 router.get('/my/messages',auth.userRequired,message.index);
+router.get('/updateMessage/:id',message.updateMessage);
+router.get('/updateAllMessage',message.updateAllMessage);
 module.exports = router;
 
 
