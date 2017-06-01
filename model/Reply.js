@@ -4,6 +4,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
+const at = require('../common/at');
+const BaseModel = require('./base_model');
 const ReplySchema = new Schema({
     _id:{
         type:String,
@@ -18,6 +20,11 @@ const ReplySchema = new Schema({
     },
     //留言的时间
     create_time:{
+        type:Date,
+        default:Date.now
+    },
+    //留言的修改时间
+    update_time:{
         type:Date,
         default:Date.now
     },
@@ -38,11 +45,32 @@ const ReplySchema = new Schema({
         type:String,
         ref:'Article'
     },
-    //点赞
-    praiseNum:{
-        type:Number,
-        default:0
+    //增加删除功能
+    deleted:{
+        type:Boolean,
+        default:false
+    },
+    //增加点赞功能
+    likes:{
+        type:[String],
+        ref:'User'
     }
 })
+ReplySchema.statics = {
+    getRepliesByTopicId:function(id,callback){
+        Reply.find({'article_id':id,'deleted':false},'',{sort:'create_time'}).populate('author').then(replies=>{
+            if(replies.length === 0){
+                return callback(null,[]);
+            }
+            for(let index of replies.keys()){
+                replies[i].content = at.linkUsers(replies[i].content);
+            }
+            return callback(null,replies);
+        }).catch(err=>{
+            return callback(err);
+        })
+    }
+}
+ReplySchema.plugin(BaseModel);
 const Reply = mongoose.model('Reply',ReplySchema);
 module.exports = Reply

@@ -138,3 +138,29 @@ messageApp.controller('messageController',($scope,$http)=>{
         })
     }
 })
+
+//问题的详情
+var showApp = angular.module('showApp',[]);
+showApp.controller('showController',($scope,$http)=>{
+
+})
+showApp.controller('replyController',($scope,$http)=>{
+    var huifu = angular.element('#huifu');
+    new SimpleMDE({
+        element: huifu[0],
+        status:false,
+        styleSelectedText:false,
+    });
+})
+showApp.controller('reply2Controller',($scope,$http)=>{
+    var liuyan = angular.element('#liuyan');
+    new SimpleMDE({
+        element: liuyan[0],
+        status:false,
+        styleSelectedText:false,
+    });
+    /* simplede.codemirror.on("change", function(){
+     console.log(simplede.value());
+     });*/
+})
+

@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -15,6 +16,8 @@
     "express-session": "^1.15.3",
     "jade": "~1.11.0",
     "lodash": "^4.17.4",
+    "markdown-it": "^8.3.1",
+    "moment": "^2.18.1",
     "mongoose": "^4.9.8",
     "morgan": "~1.7.0",
     "nodemailer": "^4.0.1",
@@ -22,6 +25,7 @@
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.8",
     "simplemde": "^1.11.2",
-    "validator": "^7.0.0"
+    "validator": "^7.0.0",
+    "xss": "^0.3.3"
   }
 }

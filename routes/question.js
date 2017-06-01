@@ -12,9 +12,39 @@ const at = require('../common/at');
 //这里使用了缓存的技术
 const cache = require('../util/cache');
 exports.index = (req,res,next)=>{
-    res.render('question',{
-        title:'问题--社区问答系统',
-        layout:'indexTemplate'
+    //获取文章的ID
+    let article_id = req.params.id;
+    //获取当前登录的作者
+    let currentUser = req.session.user;
+    //获取文章详情、文章的作者信息、文章的回复列表
+    //这次callback要返回很多数据，因此关于错误的判断就显得尤为的谨慎了。
+    Article.getArticle(article_id,function(err,message,article,replies){
+       if(message !== ''){
+           res.render('error',{
+               message:message,
+               error:''
+           })
+       }
+       if(err){
+           res.render('error',{
+               message:'',
+               error:err
+           })
+       }
+       article.click_num += 1;
+       article.save();
+       article.replies = replies;
+       //获取这个作者的其他文章
+       let options = {limit:5,sort:'-last_reply_time'};
+       let query = {author:article.author,_id:{'$nin':[article._id]}};
+       Article.getArticleByQuery(query,options,function(err,articles){
+           res.render('question',{
+               title:'问题--社区问答系统',
+               layout:'indexTemplate',
+               article:article,
+               other_article:articles
+           })
+       })
     })
 }
 exports.create = (req,res,next)=>{

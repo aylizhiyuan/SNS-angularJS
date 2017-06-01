@@ -10,7 +10,7 @@ const  at = {
         if(!text){
             return [];
         }
-        var ignoreRegexs = [
+        let ignoreRegexs = [
             /```.+?```/g, // 去除单行的 ```
             /^```[\s\S]+?^```/gm, // ``` 里面的是 pre 标签内容
             /`[\s\S]+?`/g, // 同一行中，`some code` 中内容也不该被解析
@@ -21,11 +21,11 @@ const  at = {
         ignoreRegexs.forEach(function (ignore_regex) {
             text = text.replace(ignore_regex, '');
         });
-        var results = text.match(/@[a-z0-9\-_]+\b/igm);
-        var names = [];
+        let results = text.match(/@[a-z0-9\-_]+\b/igm);
+        let names = [];
         if(results){
-            for (var i = 0, l = results.length; i < l; i++) {
-                var s = results[i];
+            for (let i = 0, l = results.length; i < l; i++) {
+                let s = results[i];
                 //remove leading char @
                 s = s.slice(1);
                 names.push(s);
@@ -57,6 +57,17 @@ const  at = {
                 })
             })
         })
+    },
+    linkUsers:(text,callback)=>{
+        let users = at.fetchUsers(text);
+        for(let i=0,l=users.length;i<l;i++){
+            let name = users[i];
+            text = text.replace(new RegExp('@' + name + '\\b(?!\\])', 'g'), '[@' + name + '](/user/' + name + ')')
+        }
+        if (!callback) {
+            return text;
+        }
+        return callback(null, text);
     }
 }
 module.exports = at;

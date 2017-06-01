@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const partials = require('express-partials');
 const session = require('express-session');
+const _ = require('lodash');
 //引入routes.js路由文件
 const routes = require('./routes');
 //引入setting文件
@@ -61,6 +62,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
+_.extend(app.locals, require('./common/markdown'));
 app.listen(3000,()=>{
   console.log('node is OK');
 })

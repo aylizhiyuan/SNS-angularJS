@@ -5,6 +5,7 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid');
 const Schema = mongoose.Schema;
+const BaseModel = require('./base_model');
 const UserSchema = new Schema({
     //用户的ID
     _id:{
@@ -86,6 +87,7 @@ UserSchema.pre('save', function(next){
     this.update_time = now;
     next();
 });
+UserSchema.plugin(BaseModel);
 const User = mongoose.model('User',UserSchema);
 module.exports = User;
 

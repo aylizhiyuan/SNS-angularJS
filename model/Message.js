@@ -7,6 +7,7 @@ const shortid = require('shortid');
 const User = require('./User');
 const Article = require('./Article');
 const Reply = require('./Reply');
+const BaseModel = require('./base_model');
 const MessageSchema = new Schema({
     /*
      * type:
@@ -30,7 +31,7 @@ const MessageSchema = new Schema({
     //回复的ID
     reply_id: { type: String,ref:'Reply'},
     has_read: { type: Boolean, default: false },
-    create_at: { type: Date, default: Date.now }
+    create_time: { type: Date, default: Date.now }
 })
 MessageSchema.statics = {
     //根据用户的ID来获取未读消息的数量
@@ -54,5 +55,6 @@ MessageSchema.statics = {
         Message.update({'target_id':user_id},{$set:{'has_read':true}},{multi:true}).exec(callback);
     }
 }
+MessageSchema.plugin(BaseModel);
 const Message = mongoose.model('Message',MessageSchema);
 module.exports = Message

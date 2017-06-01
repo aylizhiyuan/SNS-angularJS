@@ -1,4 +1,4 @@
-<div class="aw-container-wrap">
+<div class="aw-container-wrap" ng-app="showApp" ng-controller="showController">
     <div class="container">
         <div class="row">
             <div class="aw-content-wrap clearfix">
@@ -7,7 +7,7 @@
                     <div class="aw-mod aw-topic-bar">
                         <div class="clearfix">
                             <span class="topic-tag">
-                                <a href="#" class="text">不同的话题</a>
+                                <a href="#" class="text"><%= article.categoryName %></a>
                             </span>
                         </div>
                     </div>
@@ -15,31 +15,33 @@
                     <!--问题主体-->
                     <div class="aw-mod aw-question-detail">
                         <div class="mod-head">
-                            <h1>bootstrap如何才能很好的使用，为什么我一直都学不会啊？</h1>
+                            <h1><%= article.title %></h1>
+                            <% if(userInfo){%>
                             <div class="operate clearfix">
                                 <a href="#" class="follow btn btn-normal btn-success pull-left ">
                                     <span>关注</span> <em>|</em> <b>2</b>
                                 </a>
                             </div>
+                            <%}%>
                         </div>
                         <div class="mod-body">
-                            <div class="content markitup-box">求助各位大神</div>
+                            <div class="content markitup-box"><%- markdown(article.linkContent) %></div>
                         </div>
                         <div class="mod-footer">
                             <div class="meta">
-                                <span class="text-color-999">2016-5-16</span>
+                                <span class="text-color-999"><%= article.create_time_ago() %></span>
+                                <span class="text-color-999"><%= article.click_num %>次浏览</span>
+                                <% if(userInfo && userInfo._id === article.author._id ){ %>
                                 <a class="aw-add-comment text-color-999">
-                                    <i class="fa fa-commenting-o"></i>&nbsp;添加评论
+                                    <i class="fa fa-edit"></i>&nbsp;编辑
                                 </a>
-                                <a class="text-color-999">
-                                    <i class="fa fa-envelope-o"></i>&nbsp;邀请
+                                <a class="aw-add-comment text-color-999">
+                                    <i class="fa fa-remove"></i> 删除
                                 </a>
+                                <% } %>
                                 <div class="pull-right more-operate">
                                     <a href="#" class="text-color-999">
-                                        <i class="fa fa-heart"></i>&nbsp;感谢
-                                    </a>
-                                    <a href="#" class="text-color-999">
-                                        <i class="fa fa-share"></i>&nbsp;分享
+                                        <i class="fa fa-share-square-o"></i>&nbsp;分享
                                     </a>
                                 </div>
                             </div>
@@ -47,7 +49,7 @@
                     </div>
                     <!--问题主体-->
                     <!--回复-->
-                    <div class="aw-mod aw-question-comment">
+                    <div class="aw-mod aw-question-comment" ng-controller="reply2Controller">
                         <div class="mod-head">
                             <ul class="nav nav-tabs aw-nav-tabs active">
                                 <h2 class="hidden-xs">2 个回复</h2>
@@ -94,7 +96,7 @@
                                     <div class="aw-comment-box">
                                         <div class="aw-comment-list">
                                             <div align="center" class="aw-padding10">暂无回复</div>
-                                            <form action="">
+                                            <form id="reply2" action="">
                                                 <div class="aw-comment-box-main">
                                                     <textarea id="huifu" name="meg_content"></textarea>
                                                     <div class="aw-comment-box-btn" style="display: block;">
@@ -114,8 +116,8 @@
                     </div>
                     <!--回复-->
                     <!--编辑器-->
-                    <div class="aw-mod aw-replay-box">
-                        <form action="">
+                    <div class="aw-mod aw-replay-box" ng-controller="replyController">
+                        <form id="reply" action="">
                             <div class="mod-head">
                                 <a href="#" class="aw-user-name">
                                     <img src="/images/avatar-max-img.png">
@@ -153,16 +155,16 @@
                         <div class="mod-body">
                             <dl>
                                 <dt class="pull-left aw-border-radius-5">
-                                    <a href="#"><img src="/images/avatar-max-img.png"></a>
+                                    <a href="#"><img src="<%= article.author.avatar %>"></a>
                                 </dt>
                                 <dd class="pull-left">
-                                    <a class="aw-user-name" href="#">李志远</a>
+                                    <a class="aw-user-name" href="#"><%= article.author.name %></a>
                                     <a class="pull-right">关注</a>
                                 </dd>
                             </dl>
                         </div>
                         <div class="mod-footer">
-                            这家伙很懒。。什么都没有留下...
+                            <%= article.author.motto %>
                         </div>
                     </div>
                     <!--相关问题-->
@@ -171,23 +173,17 @@
                             <h3>相关问题</h3>
                         </div>
                         <div class="mod-body font-size-12">
+                            <%if(other_article.length > 0){%>
                             <ul>
+                                <% other_article.forEach(function(article,index){%>
                                 <li>
-                                    <a href="#">如何实现多张图片的垂直居中效果</a>
+                                    <a href="/question/<%= article._id %>"><%= article.title %></a>
                                 </li>
-                                <li>
-                                    <a href="#">如何实现多张图片的垂直居中效果</a>
-                                </li>
-                                <li>
-                                    <a href="#">如何实现多张图片的垂直居中效果</a>
-                                </li>
-                                <li>
-                                    <a href="#">如何实现多张图片的垂直居中效果</a>
-                                </li>
-                                <li>
-                                    <a href="#">如何实现多张图片的垂直居中效果</a>
-                                </li>
+                                <% }) %>
                             </ul>
+                            <% }else{ %>
+                            <p>无相关问题</p>
+                            <% } %>
                         </div>
                     </div>
                     <!--其他的版块-->
@@ -204,18 +200,3 @@
         </div>
     </div>
 </div>
-<script>
-    var simplemde1 = new SimpleMDE({
-        element: $("#liuyan")[0] ,
-        status:false,
-        styleSelectedText:false,
-    });
-    var simplemde2 = new SimpleMDE({
-        element: $("#huifu")[0] ,
-        status:false,
-        styleSelectedText:false,
-    });
-   /* simplede.codemirror.on("change", function(){
-        console.log(simplede.value());
-    });*/
-</script>

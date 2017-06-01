@@ -6,7 +6,7 @@ const mapping = require('../static');
 const Message = require('../model/Message');
 exports.index = (req,res,next)=>{
     //获取所有的已读消息和未读消息
-    //这里这种写法让我很无语，真的.
+    //这里用promise.all方法是最合适的.
     Message.getUnreadMessage(req.session.user._id,(err,dataList)=>{
         let notReadMessage = dataList;
         Message.getReadMessage(req.session.user._id,(err,dataList)=>{
