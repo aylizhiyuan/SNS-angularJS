@@ -33,13 +33,11 @@ const ReplySchema = new Schema({
         type:String,
         ref:'User' //关联用户表
     },
-    //被回复人的ID
-    replyAuthor:{
+    //二级回复的时候设置它,回复的ID
+    reply_id:{
         type:String,
-        ref:'User'
+        ref:'Reply'
     },
-    //是不是针对某条留言进行回复的.
-    relationMsgId:String,
     //留言的对应文章
     article_id:{
         type:String,
@@ -57,7 +55,7 @@ const ReplySchema = new Schema({
     }
 })
 ReplySchema.statics = {
-    getRepliesByTopicId:function(id,callback){
+    getRepliesByTopicId:(id,callback)=>{
         Reply.find({'article_id':id,'deleted':false},'',{sort:'create_time'}).populate('author').then(replies=>{
             if(replies.length === 0){
                 return callback(null,[]);

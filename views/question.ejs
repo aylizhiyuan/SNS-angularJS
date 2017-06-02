@@ -49,6 +49,8 @@
                     </div>
                     <!--问题主体-->
                     <!--回复-->
+                    <%if(userInfo){%>
+                    <%if(article.replies && article.replies.length > 0){%>
                     <div class="aw-mod aw-question-comment" ng-controller="reply2Controller">
                         <div class="mod-head">
                             <ul class="nav nav-tabs aw-nav-tabs active">
@@ -81,9 +83,6 @@
                                                 <i class="fa fa-thumbs-o-up"></i>
                                                 <b class="count">0</b>
                                             </a>
-                                            <a class="disagree">
-                                                <i class="fa fa-thumbs-o-down"></i>
-                                            </a>
                                         </span>
                                         <span class="operate">
                                             <a class="aw-add-comment">
@@ -92,13 +91,11 @@
                                             </a>
                                         </span>
                                     </div>
-                                    <!--回复的DIV留在这里，以后再做-->
                                     <div class="aw-comment-box">
                                         <div class="aw-comment-list">
-                                            <div align="center" class="aw-padding10">暂无回复</div>
-                                            <form id="reply2" action="">
+                                            <form id="reply2_form" method="post" ng-submit="postForm()">
                                                 <div class="aw-comment-box-main">
-                                                    <textarea id="huifu" name="meg_content"></textarea>
+                                                    <textarea class="reply_editor"></textarea>
                                                     <div class="aw-comment-box-btn" style="display: block;">
                                                         <span class="pull-right">
                                                             <a class="btn btn-mini btn-success">评论</a>
@@ -114,30 +111,31 @@
                         </div>
                         <div class="mod-footer"></div>
                     </div>
+                    <%}%>
                     <!--回复-->
                     <!--编辑器-->
                     <div class="aw-mod aw-replay-box" ng-controller="replyController">
-                        <form id="reply" action="">
+                        <form id="reply_form" target="/<%= article._id %>/reply" name="reply_form" method="post" ng-submit="postForm()">
                             <div class="mod-head">
                                 <a href="#" class="aw-user-name">
-                                    <img src="/images/avatar-max-img.png">
+                                    <img src="<%= userInfo.avatar %>">
                                 </a>
                                 <p>
-                                    李志远
+                                    <%= userInfo.name %>
                                 </p>
                             </div>
                             <div class="mod-body">
                                 <div class="aw-mod aw-editor-box">
                                     <div class="mod-head" style="border:0">
                                         <div class="wmd-panel">
-                                            <textarea id="liuyan"  name="anwer_content">
+                                            <textarea class="reply_editor" name="reply_content">
 
                                             </textarea>
                                         </div>
                                     </div>
                                     <div class="mod-body clearfix">
                                         <span class="pull-right">
-                                            <a href="#" class="btn btn-normal btn-success">回复</a>
+                                            <input ng-disabled="!isEmpty" type="submit" value="回复" class="btn btn-normal btn-success"/>
                                         </span>
                                     </div>
                                 </div>
@@ -145,6 +143,7 @@
                         </form>
                     </div>
                     <!--编辑器-->
+                    <%}%>
                 </div>
                 <div class="col-md-3 aw-side-bar hidden-xs hidden-sm">
                     <!--个人信息-->

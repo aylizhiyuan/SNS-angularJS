@@ -18,7 +18,7 @@ exports.index = (req,res,next)=>{
     let currentUser = req.session.user;
     //获取文章详情、文章的作者信息、文章的回复列表
     //这次callback要返回很多数据，因此关于错误的判断就显得尤为的谨慎了。
-    Article.getArticle(article_id,function(err,message,article,replies){
+    Article.getFullArticle(article_id,function(err,message,article,replies){
        if(message !== ''){
            res.render('error',{
                message:message,

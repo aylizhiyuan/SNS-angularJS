@@ -2008,7 +2008,8 @@ a.aw-load-more-content {
     position: relative;
     margin: 10px auto;
     border: 1px solid #e6e6e6;
-    background-color: #fff
+    background-color: #fff;
+    display:none;
 }
 
 .aw-comment-box .aw-comment-list {

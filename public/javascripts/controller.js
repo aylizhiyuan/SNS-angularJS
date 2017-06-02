@@ -74,7 +74,7 @@ createApp.controller('createController',($scope,$http)=>{
         styleSelectedText:false,
     });
     simplemde.codemirror.on("change", function(){
-        if(simplemde.value() == ''){
+        if(simplemde.value().trim() == ''){
             $scope.isEmpty = false;
             $scope.$apply('');
         }else{
@@ -142,25 +142,39 @@ messageApp.controller('messageController',($scope,$http)=>{
 //问题的详情
 var showApp = angular.module('showApp',[]);
 showApp.controller('showController',($scope,$http)=>{
-
+    $scope.isEmpty = false;
+    //初始化所有的编辑器
+    $('textarea.reply_editor').each(function(){
+        var editor = new SimpleMDE({
+            status:[]
+        })
+        editor.codemirror.on('change',function(){
+            if(editor.value().trim() == ''){
+                $scope.isEmpty = false;
+                $scope.$apply('');
+            }else{
+                $scope.isEmpty = true;
+                $scope.$apply('');
+            }
+        })
+    })
 })
 showApp.controller('replyController',($scope,$http)=>{
-    var huifu = angular.element('#huifu');
-    new SimpleMDE({
-        element: huifu[0],
-        status:false,
-        styleSelectedText:false,
-    });
+    //用户回复某个文章
+    $scope.postForm = ()=>{
+        $http({
+            method:'POST',
+            url:$('#reply_form').attr('target'),
+            data:$('#reply_form').serialize(),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        }).success((data)=>{
+            console.log(data);
+        }).error((err)=>{
+            console.log(err);
+        })
+    }
 })
 showApp.controller('reply2Controller',($scope,$http)=>{
-    var liuyan = angular.element('#liuyan');
-    new SimpleMDE({
-        element: liuyan[0],
-        status:false,
-        styleSelectedText:false,
-    });
-    /* simplede.codemirror.on("change", function(){
-     console.log(simplede.value());
-     });*/
+
 })
 

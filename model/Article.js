@@ -42,22 +42,16 @@ const ArticleSchema = new Schema({
     click_num:{
         type:Number,
         default:0,
-        min:0,
-        max:100000
     },
     //回复量
     comment_num:{
         type:Number,
         default:0,
-        min:0,
-        max:100000
     },
     //关注量
     follow_num:{
         type:Number,
         default:0,
-        min:0,
-        max:100000
     },
     //作者,它应该一个user表中的数据
     author:{
@@ -101,7 +95,7 @@ ArticleSchema.statics = {
     //.all方法通常用在数据之间没有关联的时候
     //.then的链式调用通常用在数据有相互关联的时候
     //获取文章的所有信息
-    getArticle:(id,callback)=>{
+    getFullArticle:(id,callback)=>{
         //1.首先检查下这篇文章是否存在
         Article.findOne({'_id':id,'deleted':false}).populate('author').populate('last_reply').then(article=>{
             if(!article){
@@ -129,6 +123,13 @@ ArticleSchema.statics = {
             //如果这篇文章的作者已经被删除，那么它这篇文章应该也设置为空
             //暂时先不做这方面的工作，因为感觉现在还没必要
             return callback(null,articles);
+        }).catch(err=>{
+            return callback(err);
+        })
+    },
+    getArticle:(id,callback)=>{
+        Article.findOne({'_id':id}).populate('author').then((article)=>{
+            return callback(null,article);
         }).catch(err=>{
             return callback(err);
         })
