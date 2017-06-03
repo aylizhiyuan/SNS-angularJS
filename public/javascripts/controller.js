@@ -168,7 +168,11 @@ showApp.controller('replyController',($scope,$http)=>{
             data:$('#reply_form').serialize(),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success((data)=>{
-            console.log(data);
+            if(typeof data == 'object'){
+                window.location.href = `/question/${data.path}`;
+            }else{
+                console.log(data);
+            }
         }).error((err)=>{
             console.log(err);
         })

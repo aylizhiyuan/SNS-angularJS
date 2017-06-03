@@ -8,6 +8,7 @@ const Article = require('../model/Article');
 const Reply = require('../model/Reply');
 const User = require('../model/User');
 const at = require('../common/at');
+const message = require('../common/message');
 exports.add = (req,res,next)=>{
     let content = req.body.reply_content;
     let article_id = req.params.article_id;
@@ -48,8 +49,29 @@ exports.add = (req,res,next)=>{
             User.getUserById(article.author,(err,article_author)=>{
                 //发送at消息
                 let newContent = content.replace('@' + article_author.name + ' ','');
-                /*at.sendMessageToMentionUsers(newContent,article_id,req.session.user._id,reply._id);*/
+                at.sendMessageToMentionUsers(newContent,article_id,req.session.user._id,reply._id);
             })
+            return reply;
+        }).then(reply=>{
+            //给这个留言的用户加积分,回复数量
+            User.getUserById(req.session.user._id,(err,current_user)=>{
+                current_user.score += 5;
+                current_user.reply_count += 1;
+                current_user.save();
+                req.session.user = current_user;
+            })
+            return reply;
+        }).then(reply=>{
+            //你给某个人留言了，给它发消息
+            //但是给自己留言不会
+            if(article.author._id.toString() !== req.session.user._id.toString()){
+                message.sendReplyMessage(article.author,req.session.user._id,article._id,reply._id);
+            }
+            return reply;
+        }).then(reply=>{
+            return res.json({'path':article._id,'locat':reply._id});
+        }).catch(err=>{
+            return res.end(err);
         })
     })
 }

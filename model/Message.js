@@ -37,11 +37,11 @@ MessageSchema.statics = {
     },
     //根据用户的ID来获取未读消息的列表
     getUnreadMessage :(id,callback)=>{
-        Message.find({"target_id":id,"has_read":false},null,{sort:'-create_at'}).populate('author_id').populate('article_id').populate('reply_id').exec(callback);
+        Message.find({"target_id":id,"has_read":false},null,{sort:'-create_time'}).populate('author_id').populate('article_id').populate('reply_id').exec(callback);
     },
     //根据用户的ID来获取已读消息的列表
     getReadMessage:(id,callback)=>{
-        Message.find({"target_id":id,"has_read":true},null,{sort:'-create_at',limit:20}).populate('author_id').populate('article_id').populate('reply_id').exec(callback);
+        Message.find({"target_id":id,"has_read":true},null,{sort:'-create_time',limit:20}).populate('author_id').populate('article_id').populate('reply_id').exec(callback);
     },
     //将某个消息设置为已读
     updateMessage :(id,callback)=>{
