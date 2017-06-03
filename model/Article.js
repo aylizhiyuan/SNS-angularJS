@@ -6,9 +6,8 @@ const Schema = mongoose.Schema;
 const shortid = require('shortid');
 const SETTING = require('../setting');
 const at = require('../common/at');
-const User = require('../model/User');
-const Reply = require('../model/Reply');
 const _ = require('lodash');
+const Reply = require('../model/Reply');
 const BaseModel = require('./base_model');
 const ArticleSchema = new Schema({
     _id:{

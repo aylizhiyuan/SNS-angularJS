@@ -10,7 +10,7 @@ const Article = require('../model/Article');
 const User = require('../model/User');
 const at = require('../common/at');
 //这里使用了缓存的技术
-const cache = require('../util/cache');
+//const cache = require('../util/cache');
 exports.index = (req,res,next)=>{
     //获取文章的ID
     let article_id = req.params.id;
