@@ -142,22 +142,7 @@ messageApp.controller('messageController',($scope,$http)=>{
 //问题的详情
 var showApp = angular.module('showApp',[]);
 showApp.controller('showController',($scope,$http)=>{
-    $scope.isEmpty = false;
-    //初始化所有的编辑器
-    $('textarea.reply_editor').each(function(){
-        var editor = new SimpleMDE({
-            status:[]
-        })
-        editor.codemirror.on('change',function(){
-            if(editor.value().trim() == ''){
-                $scope.isEmpty = false;
-                $scope.$apply('');
-            }else{
-                $scope.isEmpty = true;
-                $scope.$apply('');
-            }
-        })
-    })
+
 })
 showApp.controller('replyController',($scope,$http)=>{
     //用户回复某个文章
@@ -169,9 +154,10 @@ showApp.controller('replyController',($scope,$http)=>{
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success((data)=>{
             if(typeof data == 'object'){
-                window.location.href = `/question/${data.path}`;
+                window.location.reload();
+                window.location.hash = '#' + data.locat;
             }else{
-                console.log(data);
+                alert(data);
             }
         }).error((err)=>{
             console.log(err);

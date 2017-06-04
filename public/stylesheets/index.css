@@ -2007,14 +2007,13 @@ a.aw-load-more-content {
 .aw-comment-box {
     position: relative;
     margin: 10px auto;
-    border: 1px solid #e6e6e6;
-    background-color: #fff;
-    display:none;
+    /*border: 1px solid #e6e6e6;
+    background-color: #fff;*/
 }
 
 .aw-comment-box .aw-comment-list {
-    padding: 15px 15px 0;
-    border-bottom: 1px solid #f2f2f2
+   /* padding: 15px 15px 0;
+    border-bottom: 1px solid #f2f2f2*/
 }
 
 .aw-comment-box .aw-comment-list .aw-padding10 {
@@ -2022,8 +2021,9 @@ a.aw-load-more-content {
 }
 
 .aw-comment-box form {
-    padding: 15px;
-    background-color: #fafafa
+    display:none;
+    /*padding: 15px;
+    background-color: #fafafa*/
 }
 
 .aw-comment-box textarea {

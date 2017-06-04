@@ -15,9 +15,7 @@ exports.add = (req,res,next)=>{
     let reply_id = req.body.reply_id;
     let str = validator.trim(String(content));
     if(str === ''){
-        return res.render('error',{
-            message:'回复的内容不能为空'
-        })
+        return res.end('内容不能为空');
     }
     Article.getArticle(article_id,(err,article)=>{
         //404页面

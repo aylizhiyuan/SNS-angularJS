@@ -34,6 +34,7 @@ exports.index = (req,res,next)=>{
        article.click_num += 1;
        article.save();
        article.replies = replies;
+       //console.log(replies);
        //获取这个作者的其他文章
        let options = {limit:5,sort:'-last_reply_time'};
        let query = {author:article.author,_id:{'$nin':[article._id]}};

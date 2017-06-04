@@ -61,7 +61,7 @@ ReplySchema.statics = {
                 return callback(null,[]);
             }
             for(let index of replies.keys()){
-                replies[i].content = at.linkUsers(replies[i].content);
+                replies[index].content = at.linkUsers(replies[index].content);
             }
             return callback(null,replies);
         }).catch(err=>{

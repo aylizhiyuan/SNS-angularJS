@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     //个人头像
     avatar:{
         type:String,
-        default:'/public/images/default-avatar.jpg'
+        default:'/images/default-avatar.jpg'
     },
     //创建时间
     create_time:{
