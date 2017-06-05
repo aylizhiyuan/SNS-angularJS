@@ -85,8 +85,8 @@
                                             </a>
                                         </span>
                                         <span class="operate">
-                                            <a class="aw-add-comment">
-                                                <i class="fa fa-commenting-o reply2_btn"></i>
+                                            <a href="javascript:void(0)" class="aw-add-comment  reply2_btn">
+                                                <i class="fa fa-commenting-o"></i>
                                                 留言
                                             </a>
                                         </span>
@@ -96,7 +96,7 @@
                                             <form class="reply2_form" target="/<%= article._id %>/reply" name="reply2_form" method="post" ng-submit="postForm()">
                                                 <input type="hidden" name="reply_id" value="<%= reply._id %>">
                                                 <div class="aw-comment-box-main">
-                                                    <textarea class="reply_editor" id="reply2_editor_<%= reply._id %>" name="reply_content">
+                                                    <textarea class="reply_editor editor" id="reply2_editor_<%= reply._id %>" name="reply_content">
 
                                                     </textarea>
                                                     <div class="aw-comment-box-btn" style="display: block;">
@@ -209,6 +209,29 @@
             element:value,
             status:[]
         })
+        var $el = $(this);
+        editor.render(this);
+        //绑定editor
+        $(this).data('editor', editor);
     })
-
+    //继续对回复进行评论
+    $('.reply2_btn').click(function(event){
+        var $btn = $(event.currentTarget);
+        //找到它的父级列表
+        var parent = $btn.closest('.aw-item');
+        //对应的表单
+        var editorWrap = parent.find('.reply2_form');
+        //parent.find('.aw-comment-list').prepend(editorWrap);
+        //找到所有的输入框
+        var textarea = editorWrap.find('textarea.editor');
+        //找到所对应的用户
+        var user = $btn.closest('.aw-item').find('.aw-user-name').text().trim();
+        var editor = textarea.data('editor');
+        var cm = editor.codemirror;
+        editorWrap.show('fast',function(){
+            if(cm.getValue().indexOf('@' + user) < 0){
+                editor.value('@' + user + ' ');
+            }
+        })
+    })
 </script>
