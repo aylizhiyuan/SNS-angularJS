@@ -32,10 +32,10 @@
                                 <span class="text-color-999"><%= article.create_time_ago() %></span>
                                 <span class="text-color-999"><%= article.click_num %>次浏览</span>
                                 <% if(userInfo && userInfo._id === article.author._id ){ %>
-                                <a class="aw-add-comment text-color-999">
+                                <a href="/question/<%= article._id %>/edit" class="aw-add-comment text-color-999">
                                     <i class="fa fa-edit"></i>&nbsp;编辑
                                 </a>
-                                <a class="aw-add-comment text-color-999">
+                                <a href="javascript:void(0)" ng-click="delete()"  class="aw-add-comment text-color-999">
                                     <i class="fa fa-remove"></i> 删除
                                 </a>
                                 <% } %>
@@ -102,7 +102,7 @@
                                                     <div class="aw-comment-box-btn" style="display: block;">
                                                         <span class="pull-right">
                                                             <input type="submit" data-id='<%= reply._id %>' class="btn btn-mini btn-success" value="评论">
-                                                            <a class="btn btn-mini btn-gray close-comment-box">取消</a>
+                                                            <a ng-click="close($event)" class="btn btn-mini btn-gray close-comment-box">取消</a>
                                                         </span>
                                                     </div>
                                                 </div>

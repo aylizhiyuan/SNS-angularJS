@@ -27,10 +27,12 @@ router.get('/question/create',auth.userRequired,question.create);
 //新建的行为
 router.post('/question/create',auth.userRequired,question.postCreate);
 //编辑
-router.get('/question/edit',auth.userRequired,question.edit);
+router.get('/question/:id/edit',auth.userRequired,question.edit);
+router.post('/question/:id/edit',auth.userRequired,question.postEdit);
+//删除
+router.post('/question/:id/delete',auth.userRequired,question.delete);
 //详情
 router.get('/question/:id',question.index)
-
 
 //-------------------------------用户页面----------------------------------
 //个人设置

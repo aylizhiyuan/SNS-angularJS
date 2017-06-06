@@ -142,6 +142,13 @@ messageApp.controller('messageController',($scope,$http)=>{
 //问题的详情
 var showApp = angular.module('showApp',[]);
 showApp.controller('showController',($scope,$http)=>{
+    //删除操作
+    $scope.delete = ()=>{
+
+    }
+    //关注某个文章
+    //关注某个人
+
 
 })
 showApp.controller('replyController',($scope,$http)=>{
@@ -153,7 +160,11 @@ showApp.controller('replyController',($scope,$http)=>{
             data:$('#reply_form').serialize(),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success((data)=>{
-            window.location.reload();
+            if(typeof data == 'object'){
+                window.location.reload();
+            }else{
+                alert(data);
+            }
         }).error((err)=>{
             console.log(err);
         })
@@ -178,5 +189,49 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             console.log(err);
         })
     }
+    //关闭二级回复
+    $scope.close = (myevent)=>{
+        let $btn = $(myevent.target);
+        //找到最近的form表单
+        let editorForm = $btn.closest('form.reply2_form');
+        //找到form表单中的textarea
+        let textarea = editorForm.find('textarea.editor');
+        let editor = textarea.data('editor');
+        editorForm.hide('fast',function(){
+            editor.value('');
+        })
+    }
+    //点赞
+
+})
+
+//编辑文章
+var editApp = angular.module('editApp',[]);
+editApp.controller('editController',($scope,$http)=>{
+    $scope.formData = {
+        title:$('input[name=title]').val(),
+        category:$('select[name=category]').val()
+    };
+    $scope.isEmpty = true;
+    $scope.error = '';
+    var simplemde = new SimpleMDE({
+        element: $("#question")[0],
+        status:false,
+        styleSelectedText:false,
+    });
+    simplemde.codemirror.on("change", function(){
+        if(simplemde.value().trim() == ''){
+            $scope.isEmpty = false;
+            $scope.$apply('');
+        }else{
+            $scope.isEmpty = true;
+            $scope.$apply('');
+        }
+    });
+    $scope.updateForm = ()=>{
+        console.log($scope.formData);
+        console.log(simplemde.value());
+    }
+
 })
 

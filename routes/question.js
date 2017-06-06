@@ -55,12 +55,6 @@ exports.create = (req,res,next)=>{
         categorys:SETTING.categorys
     })
 }
-exports.edit = (req,res,next)=>{
-    res.render('edit-question',{
-        title:'编辑--社区问答系统',
-        layout:'indexTemplate'
-    })
-}
 exports.postCreate = (req,res,next)=>{
     //文章的标题
     let title = req.body.title;
@@ -103,3 +97,37 @@ exports.postCreate = (req,res,next)=>{
         })
     }
 }
+//编辑页面
+exports.edit = (req,res,next)=>{
+    var article_id = req.params.id;
+    Article.getArticle(article_id,(err,article)=>{
+        if(!article){
+            return res.render('error',{
+                message:'此话题不存在或已被删除',
+                error:''
+            })
+        }
+        if(String(article.author._id) === String(req.session.user._id)){
+            return res.render('edit-question',{
+                title:'编辑--社区问答系统',
+                layout:'indexTemplate',
+                categorys:SETTING.categorys,
+                article:article
+            })
+        }else{
+            res.render('error',{
+                message:'对不起，你没有权限编辑此文章',
+                error:''
+            })
+        }
+    })
+}
+//编辑这篇文章
+exports.postEdit = (req,res,next)=>{
+
+}
+//删除这篇文章
+exports.delete = (req,res,next)=>{
+
+}
+

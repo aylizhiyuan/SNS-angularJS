@@ -28,6 +28,8 @@ exports.add = (req,res,next)=>{
         reply.author = req.session.user._id;
         if(reply_id){
             reply.reply_id = reply_id;
+            //如果它是二级回复，可以在这里进行操作
+
         }
         reply.save().then((reply)=>{
             //获取到留言的这篇文章的信息之后，将留言保存在Reply表中
