@@ -153,12 +153,7 @@ showApp.controller('replyController',($scope,$http)=>{
             data:$('#reply_form').serialize(),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success((data)=>{
-            if(typeof data == 'object'){
-                window.location.reload();
-                window.location.hash = '#' + data.locat;
-            }else{
-                alert(data);
-            }
+            window.location.reload();
         }).error((err)=>{
             console.log(err);
         })
@@ -175,7 +170,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success((data)=>{
             if(typeof data == 'object'){
-                window.location.reload();
+               window.location.reload();
             }else{
                 alert(data);
             }
@@ -183,6 +178,5 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             console.log(err);
         })
     }
-
 })
 
