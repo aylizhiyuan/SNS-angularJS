@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="aw-comment-box">
                                         <div class="aw-comment-list">
-                                            <form class="reply2_form" target="/<%= article._id %>/reply" name="reply2_form" method="post" ng-submit="postForm()">
+                                            <form class="reply2_form" target="/<%= article._id %>/reply" name="reply2_form" method="post" ng-submit="postForm($event)">
                                                 <input type="hidden" name="reply_id" value="<%= reply._id %>">
                                                 <div class="aw-comment-box-main">
                                                     <textarea class="reply_editor editor" id="reply2_editor_<%= reply._id %>" name="reply_content">

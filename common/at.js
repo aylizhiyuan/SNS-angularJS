@@ -4,6 +4,8 @@
 const User = require('../model/User');
 const _ = require('lodash');
 const message = require('./message');
+//我可以在发布文章的时候和给文章留言的时候@某个人,如果我@的是作者，作者是忽略@信息的
+//作者只会接收到回复的消息
 const  at = {
     //从发布文章的内容中提取出@username标记的用户名数组
     fetchUsers :text=>{

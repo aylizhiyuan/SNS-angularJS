@@ -145,7 +145,7 @@ showApp.controller('showController',($scope,$http)=>{
 
 })
 showApp.controller('replyController',($scope,$http)=>{
-    //用户回复某个文章
+    //一级回复
     $scope.postForm = ()=>{
         $http({
             method:'POST',
@@ -165,6 +165,24 @@ showApp.controller('replyController',($scope,$http)=>{
     }
 })
 showApp.controller('reply2Controller',($scope,$http)=>{
+    //二级回复
+    $scope.postForm = (myevent)=>{
+        let url = $(myevent.target).attr('target');
+        $http({
+            method:'POST',
+            url:url,
+            data:$(myevent.target).serialize(),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        }).success((data)=>{
+            if(typeof data == 'object'){
+                window.location.reload();
+            }else{
+                alert(data);
+            }
+        }).error((err)=>{
+            console.log(err);
+        })
+    }
 
 })
 
