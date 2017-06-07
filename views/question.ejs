@@ -86,23 +86,56 @@
                                         </span>
                                         <span class="operate">
                                             <a href="javascript:void(0)" class="aw-add-comment  reply2_btn">
-                                                <i class="fa fa-commenting-o"></i>
-                                                留言
+                                                <i class="fa fa-comment-o"></i>
+                                                8
                                             </a>
                                         </span>
                                     </div>
                                     <div class="aw-comment-box">
                                         <div class="aw-comment-list">
-                                            <form class="reply2_form" target="/<%= article._id %>/reply" name="reply2_form" method="post" ng-submit="postForm($event)">
+                                            <!--<div align="center" class="aw-padding10">暂无评论</div>-->
+                                            <div class="comment-item">
+                                                <div class="mod-head">
+                                                    <a class="aw-user-img aw-border-radius-5 pull-right" href="#">
+                                                        <img src="/images/avatar-mid-img.png">
+                                                    </a>
+                                                    <div class="title">
+                                                        <p>
+                                                            <a class="aw-user-name" href="#">李志远</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mod-body clearfix">
+                                                    <div class="markitup-box">
+                                                        有人说我是骗访问量，澄清一下，我是自己测试时发现的现象，并没有主动骗访问量
+                                                    </div>
+                                                </div>
+                                                <div class="mod-footer">
+                                                    <span class="text-color-999 pull-right">22天前</span>
+                                                    <span class="operate">
+                                                        <a class="agree">
+                                                            <i class="fa fa-thumbs-o-up"></i>
+                                                            <b class="count">0</b>
+                                                        </a>
+                                                    </span>
+                                                    <span class="operate">
+                                                        <a href="javascript:void(0)" class="aw-add-comment  reply2_btn">
+                                                            <i class="fa fa-commenting-o"></i>
+                                                            回复
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <form class="reply2_form" target="/<%= article._id %>/comment" name="reply2_form" ng-submit="postForm($event)">
                                                 <input type="hidden" name="reply_id" value="<%= reply._id %>">
                                                 <div class="aw-comment-box-main">
-                                                    <textarea class="reply_editor editor" id="reply2_editor_<%= reply._id %>" name="reply_content">
-
-                                                    </textarea>
+                                                    <textarea class="reply_editor editor" name="reply_content"></textarea>
                                                     <div class="aw-comment-box-btn" style="display: block;">
                                                         <span class="pull-right">
-                                                            <input type="submit" data-id='<%= reply._id %>' class="btn btn-mini btn-success" value="评论">
-                                                            <a ng-click="close($event)" class="btn btn-mini btn-gray close-comment-box">取消</a>
+                                                            <input type="submit" class="btn btn-mini btn-success" value="评论">
+                                                            <a ng-click="close($event)" class="btn btn-mini btn-gray close-comment-box">
+                                                                取消
+                                                            </a>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -213,25 +246,5 @@
         editor.render(this);
         //绑定editor
         $(this).data('editor', editor);
-    })
-    //继续对回复进行评论
-    $('.reply2_btn').click(function(event){
-        var $btn = $(event.currentTarget);
-        //找到它的父级列表
-        var parent = $btn.closest('.aw-item');
-        //对应的表单
-        var editorWrap = parent.find('.reply2_form');
-        //parent.find('.aw-comment-list').prepend(editorWrap);
-        //找到所有的输入框
-        var textarea = editorWrap.find('textarea.editor');
-        //找到所对应的用户
-        var user = $btn.closest('.aw-item').find('.aw-user-name').text().trim();
-        var editor = textarea.data('editor');
-        var cm = editor.codemirror;
-        editorWrap.show('fast',function(){
-            if(cm.getValue().indexOf('@' + user) < 0){
-                editor.value('@' + user + ' ');
-            }
-        })
     })
 </script>

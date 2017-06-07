@@ -171,37 +171,7 @@ showApp.controller('replyController',($scope,$http)=>{
     }
 })
 showApp.controller('reply2Controller',($scope,$http)=>{
-    //二级回复
-    $scope.postForm = (myevent)=>{
-        let url = $(myevent.target).attr('target');
-        $http({
-            method:'POST',
-            url:url,
-            data:$(myevent.target).serialize(),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        }).success((data)=>{
-            if(typeof data == 'object'){
-               window.location.reload();
-            }else{
-                alert(data);
-            }
-        }).error((err)=>{
-            console.log(err);
-        })
-    }
-    //关闭二级回复
-    $scope.close = (myevent)=>{
-        let $btn = $(myevent.target);
-        //找到最近的form表单
-        let editorForm = $btn.closest('form.reply2_form');
-        //找到form表单中的textarea
-        let textarea = editorForm.find('textarea.editor');
-        let editor = textarea.data('editor');
-        editorForm.hide('fast',function(){
-            editor.value('');
-        })
-    }
-    //点赞
+
 
 })
 

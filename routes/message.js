@@ -19,7 +19,6 @@ exports.index = (req,res,next)=>{
                 not_read:notReadMessage
             })
         })
-
     })
 }
 exports.updateMessage = (req,res,next)=>{

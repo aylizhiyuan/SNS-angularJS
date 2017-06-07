@@ -1336,6 +1336,14 @@ a.aw-load-more-content {
     border-bottom: none
 }
 
+.aw-feed-list .aw-item .comment-item {
+    position: relative;
+    padding: 14px 0;
+    border-bottom: 1px solid #F5F5F5
+}
+.aw-feed-list .aw-item .comment-item:last-of-type {
+    border-bottom: none
+}
 .aw-feed-list .aw-item.active {
     margin: 0 -20px;
     padding: 14px 20px;
@@ -2005,15 +2013,16 @@ a.aw-load-more-content {
 }
 
 .aw-comment-box {
+    display:none;
     position: relative;
     margin: 10px auto;
-    /*border: 1px solid #e6e6e6;
-    background-color: #fff;*/
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
 }
 
 .aw-comment-box .aw-comment-list {
-   /* padding: 15px 15px 0;
-    border-bottom: 1px solid #f2f2f2*/
+    padding: 15px;
+    /*border-bottom: 1px solid #f2f2f2*/
 }
 
 .aw-comment-box .aw-comment-list .aw-padding10 {
@@ -2021,9 +2030,9 @@ a.aw-load-more-content {
 }
 
 .aw-comment-box form {
-    display:none;
-    /*padding: 15px;
-    background-color: #fafafa*/
+    margin-top:20px;
+    padding: 15px;
+    background-color: #fafafa
 }
 
 .aw-comment-box textarea {
