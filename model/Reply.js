@@ -28,7 +28,7 @@ const ReplySchema = new Schema({
         type:Date,
         default:Date.now
     },
-    //留言的作者
+    //留言的那个人
     author:{
         type:String,
         ref:'User' //关联用户表

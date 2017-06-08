@@ -171,8 +171,16 @@ showApp.controller('replyController',($scope,$http)=>{
     }
 })
 showApp.controller('reply2Controller',($scope,$http)=>{
-
-
+    $scope.showComment = (event)=>{
+        let targetA = $(event.currentTarget);
+        let parent = targetA.closest('.aw-item');
+        let commentItem = parent.find('.aw-comment-box');
+        let editor = commentItem.find('.editor').data('editor');
+        //显示
+        commentItem.fadeToggle('fast');
+        /*console.log(editor.codemirror);*/
+        /*editor.codemirror.setOption('placeholder','试试看吧');*/
+    }
 })
 
 //编辑文章

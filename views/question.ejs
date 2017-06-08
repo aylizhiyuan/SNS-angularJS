@@ -67,6 +67,11 @@
                                     <div class="title">
                                         <p>
                                             <a class="aw-user-name" href="/user/<%= reply.author.name %>"><%= reply.author.name %></a>
+                                            <% if(article.author.name == reply.author.name ){%>
+                                            <span class="aw-user-name" style="background-color:#99cfff;color:white">
+                                                &nbsp;作者&nbsp;
+                                            </span>
+                                            <%}%>
                                         </p>
                                     </div>
                                 </div>
@@ -85,9 +90,9 @@
                                             </a>
                                         </span>
                                         <span class="operate">
-                                            <a href="javascript:void(0)" class="aw-add-comment  reply2_btn">
+                                            <a ng-click="showComment($event)" href="javascript:void(0)" class="aw-add-comment">
                                                 <i class="fa fa-comment-o"></i>
-                                                8
+                                                8条评论
                                             </a>
                                         </span>
                                     </div>
@@ -119,7 +124,7 @@
                                                         </a>
                                                     </span>
                                                     <span class="operate">
-                                                        <a href="javascript:void(0)" class="aw-add-comment  reply2_btn">
+                                                        <a href="javascript:void(0)" class="aw-add-comment  comment_btn">
                                                             <i class="fa fa-commenting-o"></i>
                                                             回复
                                                         </a>
@@ -133,9 +138,6 @@
                                                     <div class="aw-comment-box-btn" style="display: block;">
                                                         <span class="pull-right">
                                                             <input type="submit" class="btn btn-mini btn-success" value="评论">
-                                                            <a ng-click="close($event)" class="btn btn-mini btn-gray close-comment-box">
-                                                                取消
-                                                            </a>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -172,7 +174,7 @@
                                     </div>
                                     <div class="mod-body clearfix">
                                         <span class="pull-right">
-                                            <input type="submit" value="回复" class="btn btn-normal btn-success"/>
+                                            <input type="submit" value="提交回答" class="btn btn-normal btn-success"/>
                                         </span>
                                     </div>
                                 </div>
@@ -218,7 +220,7 @@
                                 <% }) %>
                             </ul>
                             <% }else{ %>
-                            <p>无相关问题</p>
+                            <p class="text-center">无相关问题...</p>
                             <% } %>
                         </div>
                     </div>
@@ -240,7 +242,8 @@
     $('textarea.reply_editor').each(function(index,value){
         var editor = new SimpleMDE({
             element:value,
-            status:[]
+            status:[],
+            placeholder:'请写下您的评论...'
         })
         var $el = $(this);
         editor.render(this);
