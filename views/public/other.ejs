@@ -1,0 +1,19 @@
+<!--相关问题-->
+<div class="aw-mod">
+    <div class="mod-head">
+        <h3>相关问题</h3>
+    </div>
+    <div class="mod-body font-size-12">
+        <%if(other_article.length > 0){%>
+        <ul>
+            <% other_article.forEach(function(article,index){%>
+            <li>
+                <a href="/question/<%= article._id %>"><%= article.title %></a>
+            </li>
+            <% }) %>
+        </ul>
+        <% }else{ %>
+        <p class="text-center">无相关问题...</p>
+        <% } %>
+    </div>
+</div>

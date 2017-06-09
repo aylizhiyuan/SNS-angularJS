@@ -1,0 +1,45 @@
+<!--话题-->
+<div class="aw-mod aw-topic-bar">
+    <div class="clearfix">
+         <span class="topic-tag">
+             <a href="#" class="text"><%= article.categoryName %></a>
+         </span>
+    </div>
+</div>
+<!--话题-->
+<!--问题主体-->
+<div class="aw-mod aw-question-detail">
+    <div class="mod-head">
+        <h1><%= article.title %></h1>
+        <% if(userInfo){%>
+        <div class="operate clearfix">
+            <a href="#" class="follow btn btn-normal btn-success pull-left ">
+                <span>关注</span> <em>|</em> <b>2</b>
+            </a>
+        </div>
+        <%}%>
+    </div>
+    <div class="mod-body">
+        <div class="content markitup-box"><%- markdown(article.linkContent) %></div>
+    </div>
+    <div class="mod-footer">
+        <div class="meta">
+            <span class="text-color-999"><%= article.create_time_ago() %></span>
+            <span class="text-color-999"><%= article.click_num %>次浏览</span>
+            <% if(userInfo && userInfo._id === article.author._id ){ %>
+            <a href="/question/<%= article._id %>/edit" class="aw-add-comment text-color-999">
+                <i class="fa fa-edit"></i>&nbsp;编辑
+            </a>
+            <a href="javascript:void(0)" ng-click="delete()"  class="aw-add-comment text-color-999">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <% } %>
+            <div class="pull-right more-operate">
+                <a href="#" class="text-color-999">
+                    <i class="fa fa-share-square-o"></i>&nbsp;分享
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--问题主体-->

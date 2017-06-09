@@ -1,0 +1,67 @@
+<!--回复-->
+<%if(userInfo){%>
+<%if(article.replies && article.replies.length > 0){%>
+<div class="aw-mod aw-question-comment" ng-controller="reply2Controller">
+    <div class="mod-head">
+        <ul class="nav nav-tabs aw-nav-tabs active">
+            <h2 class="hidden-xs"><%= article.replies.length %>个回复</h2>
+        </ul>
+    </div>
+    <div class="mod-body aw-feed-list">
+        <% article.replies.forEach(function(reply){%>
+        <!--回复主体-->
+        <div class="aw-item" id="<%= reply._id %>">
+            <!--回复的头部-->
+            <div class="mod-head">
+                <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= reply.author.name %>">
+                    <img src="<%= reply.author.avatar %>">
+                </a>
+                <div class="title">
+                    <p>
+                        <a class="aw-user-name" href="/user/<%= reply.author.name %>"><%= reply.author.name %></a>
+                        <% if(article.author.name == reply.author.name ){%>
+                        <span class="aw-user-name" style="background-color:#99cfff;color:white">
+                            &nbsp;作者&nbsp;
+                        </span>
+                        <%}%>
+                    </p>
+                </div>
+            </div>
+            <!--回复的内容-->
+            <div class="mod-body clearfix">
+                <div class="markitup-box">
+                    <%- markdown(reply.content) %>
+                </div>
+            </div>
+            <div class="mod-footer">
+                <!--回复的操作按钮-->
+                <div class="meta clearfix">
+                    <span class="text-color-999 pull-right"><%= reply.create_time_ago() %></span>
+                    <span class="operate">
+                         <a class="agree">
+                             <i class="fa fa-thumbs-o-up"></i>
+                             <b class="count">0</b>
+                         </a>
+                    </span>
+                    <span class="operate">
+                        <a ng-click="showComment($event)" href="javascript:void(0)" class="aw-add-comment">
+                            <i class="fa fa-comment-o"></i>
+                            8条评论
+                        </a>
+                    </span>
+                </div>
+                <!--二级回复的显示位置-->
+                <div class="aw-comment-box">
+                    <div class="aw-comment-list">
+                       <% include comment %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% })%>
+    </div>
+    <div class="mod-footer"></div>
+</div>
+<%}%>
+<%}%>
+<!--回复-->

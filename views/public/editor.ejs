@@ -1,0 +1,32 @@
+<!--编辑器-->
+<%if(userInfo){%>
+<div class="aw-mod aw-replay-box" ng-controller="replyController">
+    <form id="reply_form" target="/<%= article._id %>/reply" name="reply_form" method="post" ng-submit="postForm()">
+        <div class="mod-head">
+            <a href="#" class="aw-user-name">
+                <img src="<%= userInfo.avatar %>">
+            </a>
+            <p>
+                <%= userInfo.name %>
+            </p>
+        </div>
+        <div class="mod-body">
+            <div class="aw-mod aw-editor-box">
+                <div class="mod-head" style="border:0">
+                    <div class="wmd-panel">
+                        <textarea class="reply_editor" name="reply_content">
+
+                        </textarea>
+                    </div>
+                </div>
+                <div class="mod-body clearfix">
+                    <span class="pull-right">
+                        <input type="submit" value="提交回答" class="btn btn-normal btn-success"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--编辑器-->
+<%}%>

@@ -17,10 +17,10 @@ const message = {
             callback(null,msg);
         })
     },
-    sendEchoMessage:(targetId,authorId,articleId,replyId,callback)=>{
+    sendCommentMessage:(targetId,authorId,articleId,replyId,callback)=>{
         callback = callback || _.noop;
         let message = new Message();
-        message.type = 'echo';
+        message.type = 'comment';
         message.target_id = targetId;
         message.author_id = authorId;
         message.article_id = articleId;

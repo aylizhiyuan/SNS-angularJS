@@ -35,8 +35,7 @@ const ReplySchema = new Schema({
     },
     //二级回复的时候设置它,回复的ID
     reply_id:{
-        type:String,
-        ref:'Reply'
+        type:String
     },
     //留言的对应文章
     article_id:{
@@ -52,6 +51,11 @@ const ReplySchema = new Schema({
     likes:{
         type:[String],
         ref:'User'
+    },
+    //二级回复的数量
+    comment_num:{
+        type:Number,
+        default:0,
     }
 })
 ReplySchema.statics = {
@@ -67,6 +71,9 @@ ReplySchema.statics = {
         }).catch(err=>{
             return callback(err);
         })
+    },
+    getReplyById:(id,callback)=>{
+        Reply.findOne({'_id':id},callback);
     }
 }
 ReplySchema.plugin(BaseModel);

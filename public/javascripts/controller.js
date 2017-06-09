@@ -181,6 +181,21 @@ showApp.controller('reply2Controller',($scope,$http)=>{
         /*console.log(editor.codemirror);*/
         /*editor.codemirror.setOption('placeholder','试试看吧');*/
     }
+    $scope.postForm = (event)=>{
+        let targetForm = $(event.currentTarget);
+        $http({
+            method:'POST',
+            url:targetForm.attr('target'),
+            data:targetForm.serialize(),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        }).success(function(data){
+            alert('发布成功');
+            $scope.comment = data.comment;
+        }).error(function(err){
+            console.log(err);
+        })
+    }
+
 })
 
 //编辑文章
