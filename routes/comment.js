@@ -10,6 +10,7 @@ const Article = require('../model/Article');
 const Reply = require('../model/Reply');
 const Comment = require('../model/Comment');
 const User = require('../model/User');
+const markdown = require('../common/markdown');
 //二级回复的添加
 exports.add = (req,res,next)=>{
     //获取文章的ID
@@ -79,10 +80,15 @@ exports.add = (req,res,next)=>{
             return comment;
         }).then((comment)=>{
             Comment.findOne({'_id':comment._id}).populate('author_id').populate('reply_author_id').exec((err,comment)=>{
-                return res.json({comment:comment}).end();
+                comment.content = markdown.markdown(comment.content);
+                let date = comment.create_time_ago();
+                return res.json({comment:comment,date:date}).end();
             })
         }).catch(err=>{
             return res.end(err);
         })
     })
+}
+exports.show = (req,res,next)=>{
+
 }

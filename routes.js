@@ -50,6 +50,7 @@ router.get('/user/:name/replys',user.replys);
 //-----------------------------留言回复列表-------------------------------------
 router.post('/:article_id/reply',auth.userRequired,reply.add) //一级回复
 router.post('/:article_id/comment',auth.userRequired,comment.add) //二级回复
+router.post('/:article_id/showComment',auth.userRequired,comment.show) //显示所有的二级回复
 //------------------------------消息列表----------------------------------------
 router.get('/my/messages',auth.userRequired,message.index);
 router.get('/updateMessage/:id',message.updateMessage);
