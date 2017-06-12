@@ -1,7 +1,7 @@
 <div class="comment-item" ng-show="comments.length > 0" ng-repeat="comment in comments">
     <div class="mod-head">
         <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/{{comment.author_id.name}}">
-            <img src="{{comment.author_id.avatar}}">
+            <img ng-src="{{comment.author_id.avatar}}">
         </a>
         <div class="title">
             <p>

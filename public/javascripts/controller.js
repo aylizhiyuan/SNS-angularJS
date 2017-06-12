@@ -183,11 +183,11 @@ showApp.controller('replyController',($scope,$http)=>{
 showApp.controller('reply2Controller',($scope,$http)=>{
     $scope.show = false;
     $scope.showComment = (event)=>{
-        const targetA = $(event.currentTarget);
-        const parent = targetA.closest('.aw-item');
-        const replyid = parent.attr('id');
-        const commentItem = parent.find('.aw-comment-box');
-        const editor = commentItem.find('.editor').data('editor');
+        let targetA = $(event.currentTarget);
+        let parent = targetA.closest('.aw-item');
+        let replyid = parent.attr('id');
+        let commentItem = parent.find('.aw-comment-box');
+        let editor = commentItem.find('.editor').data('editor');
         //显示
         $http({
             method:'POST',
