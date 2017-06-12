@@ -174,23 +174,27 @@ showApp.controller('reply2Controller',($scope,$http)=>{
     $scope.showComment = (event)=>{
         let targetA = $(event.currentTarget);
         let parent = targetA.closest('.aw-item');
+        let replyid = parent.attr('id');
         let commentItem = parent.find('.aw-comment-box');
         let editor = commentItem.find('.editor').data('editor');
-       /* //显示
+        //显示
         $http({
             method:'POST',
-            url:''
-        }).success(function(comments){
-            $scope.comments = comments;
+            url:`/${replyid}/showComment`,
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        }).success(function(result){
+            $scope.comments = result.comments;
+            console.log($scope.comments);
+            commentItem.fadeToggle('fast');
         }).error(function(err){
             console.log(err);
-        })*/
-        commentItem.fadeToggle('fast');
+        })
         /*console.log(editor.codemirror);*/
         /*editor.codemirror.setOption('placeholder','试试看吧');*/
     }
     $scope.postForm = (event)=>{
         let targetForm = $(event.currentTarget);
+        let editor = targetForm.find('.editor').data('editor');
         $http({
             method:'POST',
             url:targetForm.attr('target'),
@@ -234,6 +238,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             </div>
             `;
             $('#newContent').append(message);
+            editor.value('');
         }).error(function(err){
             console.log(err);
         })

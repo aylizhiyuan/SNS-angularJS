@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
 const BaseModel = require('./base_model');
+const at = require('../common/at');
 const CommentSchema = new Schema({
     _id:{
         type:String,
@@ -41,6 +42,21 @@ const CommentSchema = new Schema({
         ref:'User'
     }
 })
+CommentSchema.statics = {
+    getCommentsByReplyId:(id,callback)=>{
+        Comment.find({'reply_id':id},'',{sort:'create_time'}).populate('author_id').populate('reply_author_id').then(comments=>{
+            if(comments.length === 0){
+                return callback(null,[]);
+            }
+            for(let index of comments.keys()){
+                comments[index].content = at.linkUsers(comments[index].content);
+            }
+            return callback(null,comments);
+        }).catch(err=>{
+            return callback(err);
+        })
+    }
+}
 CommentSchema.plugin(BaseModel);
 const Comment = mongoose.model('Comment',CommentSchema);
 module.exports = Comment;

@@ -90,5 +90,13 @@ exports.add = (req,res,next)=>{
     })
 }
 exports.show = (req,res,next)=>{
-
+    //一级回复的ID
+    let reply_id = req.params.reply_id;
+    //通过一级回复的ID查找到comment表中所对应的所有的二级回复列表，并以分页形式展示
+    Comment.getCommentsByReplyId(reply_id,(err,comments)=>{
+        if(err){
+            res.end(err);
+        }
+        res.json({comments:comments}).end();
+    })
 }
