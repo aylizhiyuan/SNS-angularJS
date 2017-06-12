@@ -5014,4 +5014,26 @@ body {
     color: #ccc;
     content: "|"
 }
+.markdown-text ul {
+    list-style: none;
+    border:0;!important;
+    padding:0;!important;
+    margin:0;!important;
+}
+.markdown-text ul li {
+    border:0;!important;
+    padding:0;!important;
+    margin:0;!important;
+}
+.markdown-text ol {
+    list-style: decimal;
+    border:0;!important;
+    padding:0;!important;
+    margin:0 0 0 25px;!important;
+}
+.markdown-text ol li {
+    border:0;!important;
+    padding:0;!important;
+    margin:0;!important;
+}
 

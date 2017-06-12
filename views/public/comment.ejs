@@ -1,22 +1,20 @@
-<!--<div align="center" class="aw-padding10">暂无评论</div>-->
-<div class="comment-item">
+<div class="comment-item" ng-show="comments.length > 0" ng-repeat="comment in comments">
     <div class="mod-head">
-        <a class="aw-user-img aw-border-radius-5 pull-right" href="#">
-            <img src="/images/avatar-mid-img.png">
+        <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/{{comment.author_id.name}}">
+            <img src="{{comment.author_id.avatar}}">
         </a>
         <div class="title">
             <p>
-                <a class="aw-user-name" href="#">李志远</a>
+                <a class="aw-user-name" href="/user/{{comment.author_id.name}}">{{comment.author_id.name}}</a>
             </p>
         </div>
     </div>
     <div class="mod-body clearfix">
-        <div class="markitup-box">
-            有人说我是骗访问量，澄清一下，我是自己测试时发现的现象，并没有主动骗访问量
+        <div class="markitup-box" ng-bind-html="comment.content|to_html">
         </div>
     </div>
     <div class="mod-footer">
-        <span class="text-color-999 pull-right">22天前</span>
+        <span class="text-color-999 pull-right">{{comment.create_time|format}}</span>
         <span class="operate">
             <a class="agree">
                 <i class="fa fa-thumbs-o-up"></i>
@@ -32,7 +30,8 @@
     </div>
 </div>
 <!--二级回复的统一提交的表单-->
-<div id="newContent"></div>
+<div class="newContent"></div>
+<!--分页的地方-->
 <form class="reply2_form" target="/<%= article._id %>/comment" name="reply2_form" ng-submit="postForm($event)">
     <input type="hidden" name="reply_id" value="<%= reply._id %>">
     <input type="hidden" name="reply_author_id" value="<%= reply.author._id %>">

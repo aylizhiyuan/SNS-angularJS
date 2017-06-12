@@ -141,6 +141,16 @@ messageApp.controller('messageController',($scope,$http)=>{
 
 //问题的详情
 var showApp = angular.module('showApp',[]);
+showApp.filter('format',function(){
+    return function(date){
+        return formatTime(date,true);
+    }
+})
+showApp.filter('to_html',['$sce',function ($sce){
+    return function (text) {
+        return $sce.trustAsHtml(text);
+    }
+}])
 showApp.controller('showController',($scope,$http)=>{
     //删除操作
     $scope.delete = ()=>{
@@ -171,12 +181,13 @@ showApp.controller('replyController',($scope,$http)=>{
     }
 })
 showApp.controller('reply2Controller',($scope,$http)=>{
+    $scope.show = false;
     $scope.showComment = (event)=>{
-        let targetA = $(event.currentTarget);
-        let parent = targetA.closest('.aw-item');
-        let replyid = parent.attr('id');
-        let commentItem = parent.find('.aw-comment-box');
-        let editor = commentItem.find('.editor').data('editor');
+        const targetA = $(event.currentTarget);
+        const parent = targetA.closest('.aw-item');
+        const replyid = parent.attr('id');
+        const commentItem = parent.find('.aw-comment-box');
+        const editor = commentItem.find('.editor').data('editor');
         //显示
         $http({
             method:'POST',
@@ -184,7 +195,6 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success(function(result){
             $scope.comments = result.comments;
-            console.log($scope.comments);
             commentItem.fadeToggle('fast');
         }).error(function(err){
             console.log(err);
@@ -194,6 +204,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
     }
     $scope.postForm = (event)=>{
         let targetForm = $(event.currentTarget);
+        let parent = targetForm.closest('.aw-item');
         let editor = targetForm.find('.editor').data('editor');
         $http({
             method:'POST',
@@ -237,7 +248,8 @@ showApp.controller('reply2Controller',($scope,$http)=>{
                     </div>
             </div>
             `;
-            $('#newContent').append(message);
+            //在对应的列表中插入
+            parent.find('.newContent').append(message);
             editor.value('');
         }).error(function(err){
             console.log(err);

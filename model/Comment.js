@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const shortid = require('shortid');
 const BaseModel = require('./base_model');
 const at = require('../common/at');
+const markdown = require('../common/markdown');
 const CommentSchema = new Schema({
     _id:{
         type:String,
@@ -50,6 +51,7 @@ CommentSchema.statics = {
             }
             for(let index of comments.keys()){
                 comments[index].content = at.linkUsers(comments[index].content);
+                comments[index].content = markdown.markdown(comments[index].content);
             }
             return callback(null,comments);
         }).catch(err=>{

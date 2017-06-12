@@ -6,6 +6,7 @@ const setting = require('../setting');
 //nodeJS加密模块
 const crypto = require('crypto');
 const url = require('url');
+const Comment = require('../model/Comment');
 //这句话说明我们使用的promise对象是ES6中原生的promise对象.
 mongoose.Promise = global.Promise;
 mongoose.connect(`mongodb://${setting.host}/${setting.db}`);

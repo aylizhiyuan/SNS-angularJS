@@ -28,4 +28,13 @@
         //绑定editor
         $(this).data('editor', editor);
     })
+    moment.locale('zh-cn');
+    function formatTime (date, friendly){
+        date = moment(date);
+        if (friendly) {
+            return date.fromNow();
+        } else {
+            return date.format('YYYY-MM-DD HH:mm');
+        }
+    }
 </script>
