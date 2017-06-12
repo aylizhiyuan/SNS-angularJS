@@ -176,18 +176,18 @@ showApp.controller('reply2Controller',($scope,$http)=>{
         let parent = targetA.closest('.aw-item');
         let commentItem = parent.find('.aw-comment-box');
         let editor = commentItem.find('.editor').data('editor');
-        //显示
+       /* //显示
         $http({
             method:'POST',
             url:''
         }).success(function(comments){
             $scope.comments = comments;
-            commentItem.fadeToggle('fast');
-            /*console.log(editor.codemirror);*/
-            /*editor.codemirror.setOption('placeholder','试试看吧');*/
         }).error(function(err){
             console.log(err);
-        })
+        })*/
+        commentItem.fadeToggle('fast');
+        /*console.log(editor.codemirror);*/
+        /*editor.codemirror.setOption('placeholder','试试看吧');*/
     }
     $scope.postForm = (event)=>{
         let targetForm = $(event.currentTarget);
@@ -233,7 +233,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
                     </div>
             </div>
             `;
-            $('#newContent').html(message);
+            $('#newContent').append(message);
         }).error(function(err){
             console.log(err);
         })
