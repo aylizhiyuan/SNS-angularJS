@@ -33,4 +33,14 @@
 </div>
 <%})%>
 <div class="newContent"></div>
-<div class="pagination"></div>
+<div class="page">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-6">
+            <ul class="pagination">
+                <% pageInfo.pages.forEach(function(page){%>
+                <li><a class="loadPage" href="javascript:void(0)"><%= page %></a></li>
+                <%})%>
+            </ul>
+        </div>
+    </div>
+</div>

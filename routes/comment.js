@@ -93,13 +93,37 @@ exports.add = (req,res,next)=>{
 exports.show = (req,res,next)=>{
     //一级回复的ID
     let reply_id = req.params.reply_id;
+    let link = `/${reply_id}/showComment`;
+    let currentPage = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || 5;
+    let startNum = (currentPage - 1)*limit + 1;
+    //当前页数
     //通过一级回复的ID查找到comment表中所对应的所有的二级回复列表，并以分页形式展示
     Comment.getCommentsByReplyId(reply_id,(err,comments)=>{
         if(err){
             return res.end(err);
         }
+        //总条数
+        let totalItem = comments.length;
+        //获取总的页数
+        let totalPage = Math.ceil(totalItem/limit);
+        let pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1;
+        let pageEnd = pageStart + 4 >= totalPage ? totalPage : pageStart + 4;
+        let pageArr = [];
+        for(let i=pageStart;i<=pageEnd;i++){
+            pageArr.push(i);
+        }
+        let pageInfo = {
+            "totalItems":totalItem,
+            "currentPage":currentPage,
+            "limit":limit,
+            "startNum":Number(startNum),
+            "pages":pageArr,
+            "link":link
+        }
         return res.render('comment',{
-            comments:comments
+            comments:comments.slice(startNum - 1,startNum + limit -1),
+            pageInfo:pageInfo
         })
     })
 }

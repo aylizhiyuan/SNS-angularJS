@@ -181,7 +181,6 @@ showApp.controller('replyController',($scope,$http)=>{
     }
 })
 showApp.controller('reply2Controller',($scope,$http)=>{
-    $scope.show = false;
     $scope.showComment = (event)=>{
         let targetA = $(event.currentTarget);
         let parent = targetA.closest('.aw-item');
@@ -203,7 +202,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
         }else{
             parent.find('.aw-comment-list').find('.comment-item').remove();
             parent.find('.aw-comment-list').find('.newContent').remove();
-            parent.find('.aw-comment-list').find('.pagination').remove();
+            parent.find('.aw-comment-list').find('.page').remove();
             commentItem.fadeToggle('fast');
         }
         /*console.log(editor.codemirror);*/
@@ -263,7 +262,6 @@ showApp.controller('reply2Controller',($scope,$http)=>{
         })
     }
 })
-
 //编辑文章
 var editApp = angular.module('editApp',[]);
 editApp.controller('editController',($scope,$http)=>{
