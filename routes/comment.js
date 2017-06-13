@@ -80,6 +80,7 @@ exports.add = (req,res,next)=>{
             return comment;
         }).then((comment)=>{
             Comment.findOne({'_id':comment._id}).populate('author_id').populate('reply_author_id').exec((err,comment)=>{
+                comment.content = at.linkUsers(comment.content);
                 comment.content = markdown.markdown(comment.content);
                 let date = comment.create_time_ago();
                 return res.json({comment:comment,date:date}).end();
@@ -95,9 +96,9 @@ exports.show = (req,res,next)=>{
     //通过一级回复的ID查找到comment表中所对应的所有的二级回复列表，并以分页形式展示
     Comment.getCommentsByReplyId(reply_id,(err,comments)=>{
         if(err){
-            res.end(err);
+            return res.end(err);
         }
-        res.render('comment',{
+        return res.render('comment',{
             comments:comments
         })
     })

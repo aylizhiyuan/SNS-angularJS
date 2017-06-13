@@ -1,21 +1,22 @@
+<% comments.forEach(function(comment){%>
 <div class="comment-item">
     <div class="mod-head">
-        <a class="aw-user-img aw-border-radius-5 pull-right" href="#">
-            <img src="#">
+        <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= comment.author_id.name %>">
+            <img src="<%= comment.author_id.avatar %>">
         </a>
         <div class="title">
             <p>
-                <a class="aw-user-name" href="#">用户名</a>
+                <a class="aw-user-name" href="/user/<%= comment.author_id.name %>"><%= comment.author_id.name %></a>
             </p>
         </div>
     </div>
     <div class="mod-body clearfix">
         <div class="markitup-box">
-            二级留言的内容
+            <%- comment.content %>
         </div>
     </div>
     <div class="mod-footer">
-        <span class="text-color-999 pull-right">二级分类的时间</span>
+        <span class="text-color-999 pull-right"><%= comment.create_time_ago() %></span>
         <span class="operate">
             <a class="agree">
                 <i class="fa fa-thumbs-o-up"></i>
@@ -30,6 +31,6 @@
         </span>
     </div>
 </div>
-<!--二级回复的统一提交的表单-->
+<%})%>
 <div class="newContent"></div>
-<!--分页的地方-->
+<div class="pagination"></div>

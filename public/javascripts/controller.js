@@ -189,16 +189,23 @@ showApp.controller('reply2Controller',($scope,$http)=>{
         let commentItem = parent.find('.aw-comment-box');
         let editor = commentItem.find('.editor').data('editor');
         //显示
-        $http({
-            method:'POST',
-            url:`/${replyid}/showComment`,
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        }).success(function(result){
-            console.log(result);
+        if(commentItem.css('display') == 'none'){
+            $http({
+                method:'POST',
+                url:`/${replyid}/showComment`,
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            }).success(function(result){
+                parent.find('.aw-comment-list').prepend(result);
+                commentItem.fadeToggle('fast');
+            }).error(function(err){
+                console.log(err);
+            })
+        }else{
+            parent.find('.aw-comment-list').find('.comment-item').remove();
+            parent.find('.aw-comment-list').find('.newContent').remove();
+            parent.find('.aw-comment-list').find('.pagination').remove();
             commentItem.fadeToggle('fast');
-        }).error(function(err){
-            console.log(err);
-        })
+        }
         /*console.log(editor.codemirror);*/
         /*editor.codemirror.setOption('placeholder','试试看吧');*/
     }
