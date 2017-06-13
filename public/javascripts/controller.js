@@ -194,7 +194,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             url:`/${replyid}/showComment`,
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success(function(result){
-            $scope.comments = result.comments;
+            console.log(result);
             commentItem.fadeToggle('fast');
         }).error(function(err){
             console.log(err);

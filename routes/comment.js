@@ -97,6 +97,8 @@ exports.show = (req,res,next)=>{
         if(err){
             res.end(err);
         }
-        res.json({comments:comments}).end();
+        res.render('comment',{
+            comments:comments
+        })
     })
 }

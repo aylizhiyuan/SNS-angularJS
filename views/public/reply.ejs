@@ -53,7 +53,19 @@
                 <!--二级回复的显示位置-->
                 <div class="aw-comment-box">
                     <div class="aw-comment-list">
-                       <% include comment %>
+                        <!--二级回复的内容由后端生成-->
+                        <form class="reply2_form" target="/<%= article._id %>/comment" name="reply2_form" ng-submit="postForm($event)">
+                            <input type="hidden" name="reply_id" value="<%= reply._id %>">
+                            <input type="hidden" name="reply_author_id" value="<%= reply.author._id %>">
+                            <div class="aw-comment-box-main">
+                                <textarea class="reply_editor editor" name="comment_content"></textarea>
+                                <div class="aw-comment-box-btn" style="display: block;">
+                                <span class="pull-right">
+                                    <input type="submit" class="btn btn-mini btn-success" value="评论">
+                                </span>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
