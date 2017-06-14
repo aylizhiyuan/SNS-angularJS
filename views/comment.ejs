@@ -6,7 +6,10 @@
         </a>
         <div class="title">
             <p>
+                <!--默认是给一级回复的那个人回复的-->
                 <a class="aw-user-name" href="/user/<%= comment.author_id.name %>"><%= comment.author_id.name %></a>
+                回复
+                <a class="aw-user-name" href="/user/<%= comment.reply_author_id.name %>"><%= comment.reply_author_id.name %></a>
             </p>
         </div>
     </div>
