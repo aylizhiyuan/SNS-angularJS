@@ -1,5 +1,5 @@
 <% comments.forEach(function(comment){%>
-<div class="comment-item">
+<div class="comment-item" id="<%= comment.author_id._id %>" target="<%= comment.author_id.name %>">
     <div class="mod-head">
         <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= comment.author_id.name %>">
             <img src="<%= comment.author_id.avatar %>">
@@ -44,23 +44,3 @@
         </div>
     </div>
 </div>
-<script>
-    $('a.loadpage').click(function(event){
-        var targetA = $(event.target);
-        //要更新的内容
-        var parent = targetA.closest('.aw-comment-list');
-        //要传递的页数
-        var page = targetA.text();
-        var url = '<%= pageInfo.link %>';
-        console.log(url);
-        $.ajax({
-            type:'POST',
-            url:`${url}?page=${page}`
-        }).done(function(result){
-            parent.children().not('form').remove();
-            parent.prepend(result);
-        }).fail(function(err){
-            console.log(err);
-        });
-    })
-</script>

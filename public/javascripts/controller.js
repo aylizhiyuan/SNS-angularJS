@@ -209,17 +209,27 @@ showApp.controller('reply2Controller',($scope,$http)=>{
     $scope.postForm = (event)=>{
         let targetForm = $(event.currentTarget);
         let parent = targetForm.closest('.aw-item');
+        let form = parent.find('form.reply2_form');
         let editor = targetForm.find('.editor').data('editor');
+        let content = editor.value();
+        let comment_content = content.replace(/^(回复)\s([\u0391-\uFFE5]+[a-zA-Z0-9_]*|[a-zA-Z][a-zA-Z0-9_]{4,11})\s:\s/,'');
+        let reply_id = form.find("input[name='reply_id']").val();
+        let reply_author_id = form.find("input[name='reply_author_id']").val()
+        let data = {
+            comment_content,
+            reply_id,
+            reply_author_id
+        };
         $http({
             method:'POST',
             url:targetForm.attr('target'),
-            data:targetForm.serialize(),
+            data:$.param(data),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success(function(data){
             var comment = data.comment;
             var date = data.date;
             var message = `
-                <div class="comment-item">
+                <div class="comment-item" id="${comment.author_id._id}" target="${comment.author_id.name}">
                     <div class="mod-head">
                         <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/${comment.author_id.name}">
                             <img src="${comment.author_id.avatar}">
