@@ -38,9 +38,29 @@
         <div class="col-sm-6 col-sm-offset-6">
             <ul class="pagination">
                 <% pageInfo.pages.forEach(function(page){%>
-                <li><a class="loadPage" href="javascript:void(0)"><%= page %></a></li>
+                <li><a class="loadpage" href="javascript:void(0)"><%= page %></a></li>
                 <%})%>
             </ul>
         </div>
     </div>
 </div>
+<script>
+    $('a.loadpage').click(function(event){
+        var targetA = $(event.target);
+        //要更新的内容
+        var parent = targetA.closest('.aw-comment-list');
+        //要传递的页数
+        var page = targetA.text();
+        var url = '<%= pageInfo.link %>';
+        console.log(url);
+        $.ajax({
+            type:'POST',
+            url:`${url}?page=${page}`
+        }).done(function(result){
+            parent.children().not('form').remove();
+            parent.prepend(result);
+        }).fail(function(err){
+            console.log(err);
+        });
+    })
+</script>

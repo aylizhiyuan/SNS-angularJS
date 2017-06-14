@@ -200,9 +200,7 @@ showApp.controller('reply2Controller',($scope,$http)=>{
                 console.log(err);
             })
         }else{
-            parent.find('.aw-comment-list').find('.comment-item').remove();
-            parent.find('.aw-comment-list').find('.newContent').remove();
-            parent.find('.aw-comment-list').find('.page').remove();
+            parent.find('.aw-comment-list').children().not('form').remove();
             commentItem.fadeToggle('fast');
         }
         /*console.log(editor.codemirror);*/
@@ -289,6 +287,5 @@ editApp.controller('editController',($scope,$http)=>{
         console.log($scope.formData);
         console.log(simplemde.value());
     }
-
 })
 
