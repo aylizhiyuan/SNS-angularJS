@@ -1,0 +1,20 @@
+<!--作者信息-->
+<div class="aw-mod">
+    <div class="mod-head">
+        <h3>发起人</h3>
+    </div>
+    <div class="mod-body">
+        <dl>
+            <dt class="pull-left aw-border-radius-5">
+                <a href="#"><img src="<%= article.author.avatar %>"></a>
+            </dt>
+            <dd class="pull-left">
+                <a class="aw-user-name" href="#"><%= article.author.name %></a>
+                <a class="pull-right">关注</a>
+            </dd>
+        </dl>
+    </div>
+    <div class="mod-footer">
+        <%= article.author.motto %>
+    </div>
+</div>
