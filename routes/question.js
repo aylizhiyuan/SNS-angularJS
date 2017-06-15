@@ -169,6 +169,30 @@ exports.postEdit = (req,res,next)=>{
 }
 //删除这篇文章
 exports.delete = (req,res,next)=>{
-
+    let article_id = req.params.id;
+    Article.getFullArticle(article_id,(err,message,article,replies)=>{
+        if(err){
+            return res.json({success:false,message:err})
+        }
+        if(message !== ''){
+            return res.json({success:false,message:message})
+        }
+        //判断下有无权限
+        if(String(article.author._id) === String(req.session.user._id)){
+            //文章的作者积分和回复量减少
+            article.author.score -= 5;
+            article.author.article_count -= 1;
+            article.author.save();
+            //文章的状态为删除状态
+            article.deleted = true;
+            article.save().then((article)=>{
+                return res.json({success:true,message:'删除成功'})
+            }).catch(err=>{
+                return res.json({success:false,message:err})
+            })
+        }else{
+            return res.json({success:false,message:'您没有权限进行删除'})
+        }
+    })
 }
 

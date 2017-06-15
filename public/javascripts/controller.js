@@ -153,13 +153,27 @@ showApp.filter('to_html',['$sce',function ($sce){
 }])
 showApp.controller('showController',($scope,$http)=>{
     //删除操作
-    $scope.delete = ()=>{
-
+    $scope.delete = (event)=>{
+        let targetA = $(event.currentTarget);
+        let id = targetA.attr('target');
+        if(id !== '' && confirm('确定要删除这个问题吗?')){
+            $http({
+                method:'POST',
+                url:`/question/${id}/delete`,
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            }).success((data)=>{
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    window.location.href = '/';
+                }
+            }).error((err)=>{
+                console.log(err);
+            })
+        }
     }
     //关注某个文章
     //关注某个人
-
-
 })
 showApp.controller('replyController',($scope,$http)=>{
     //一级回复
