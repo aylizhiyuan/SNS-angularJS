@@ -56,7 +56,7 @@
                         <!--二级回复的内容由后端生成-->
                         <form id="<%= reply._id %>-form" class="reply2_form" target="/<%= article._id %>/comment" name="reply2_form" ng-submit="postForm($event)">
                             <input type="hidden" name="reply_id" value="<%= reply._id %>">
-                            <input type="hidden" name="reply_author_id" value="<%= reply.author._id %>">
+                            <input type="hidden" name="reply_author_id" value="">
                             <div class="aw-comment-box-main">
                                 <textarea class="reply_editor editor" name="comment_contentcomment_content"></textarea>
                                 <div class="aw-comment-box-btn" style="display: block;">

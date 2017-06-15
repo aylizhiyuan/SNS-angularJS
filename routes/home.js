@@ -114,20 +114,20 @@ exports.postLogin = (req,res,next)=>{
         }
         getUser(username,(err,user)=>{
             if(err){
-                res.end(err);
+                return res.end(err);
             }
             //你根据邮箱或者是用户名查到的用户信息
             if(!user){
-                res.end('用户名/邮箱不存在');
+                return res.end('用户名/邮箱不存在');
             }else{
                 //判断密码是否一样
                 let newPSD = DbSet.encrypt(password,SETTING.PSDkey);
                 if(user.password !== newPSD){
-                    res.end('密码错误,请重新输入');
+                    return res.end('密码错误,请重新输入');
                 }
                 //生成cookie
                 auth.gen_session(user,res);
-                res.end('success');
+                return res.end('success');
             }
         })
     }

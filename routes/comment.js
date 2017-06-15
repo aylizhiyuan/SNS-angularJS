@@ -74,8 +74,13 @@ exports.add = (req,res,next)=>{
         }).then((comment)=>{
             //再给回复的那个人发条消息，告诉有人回复它了
             //如果当前登录的用户就是回复的那个人，那么回复了也不会发送消息
-            if(reply_author_id.toString() !== req.session.user._id.toString()){
+            if(reply_author_id !== '' && reply_author_id.toString() !== req.session.user._id.toString()){
                 message.sendCommentMessage(reply_author_id,req.session.user._id,article._id,reply_id);
+            }else if(reply_author_id == '' && reply_author_id.toString() !== req.session.user._id.toString()){
+                //首先通过reply_id来查询对应的回复的人
+                Reply.getReplyById(reply_id,(err,reply)=>{
+                    message.sendCommentMessage(reply.author,req.session.user._id,article._id,reply_id);
+                })
             }
             return comment;
         }).then((comment)=>{

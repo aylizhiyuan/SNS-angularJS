@@ -38,6 +38,11 @@ $(document).on('click','.comment_btn',function(event){
         window.location.hash = `#${reply_id}-form`;
     }
     editor.value(`回复 ${targetName} : `);
+    editor.codemirror.on('change',function(){
+        if(editor.value() == ''){
+            form.find("input[name='reply_author_id']").val('');
+        }
+    })
     form.find("input[name='reply_author_id']").val(targetId);
 })
 
