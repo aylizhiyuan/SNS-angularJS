@@ -57,20 +57,20 @@ exports.create = (req,res,next)=>{
 }
 exports.postCreate = (req,res,next)=>{
     //文章的标题
-    let title = req.body.title;
+    let title = validator.trim(req.body.title);
     //文章的内容
-    let content = req.body.content;
+    let content = validator.trim(req.body.content);
     //文章的分类
-    let category = req.body.category;
+    let category = validator.trim(req.body.category);
     let error;
     //获取所有的分类
     const allTabs = SETTING.categorys.map(function (tPair) {
         return tPair[0];
     });
-    if(validator.isLength(title)){
+    if(!validator.isLength(title,{min:10,max:50})){
         error = '文章的标题长度不能少于10个字符或者多于50个字符'
     }
-    if(validator.isLength(content)){
+    if(!validator.isLength(content,0)){
         error = '文章的内容不能为空';
     }
     if(!category || !allTabs.includes(category)){
@@ -124,7 +124,48 @@ exports.edit = (req,res,next)=>{
 }
 //编辑这篇文章
 exports.postEdit = (req,res,next)=>{
-
+    var article_id = req.params.id;
+    var content = validator.trim(req.body.content);
+    var category = validator.trim(req.body.category);
+    var title = validator.trim(req.body.title);
+    //首先检查下这篇文章是否存在
+    Article.getArticle(article_id,(err,article)=>{
+        if(!article){
+            return end('此话题已经不存在了,请重新检查');
+        }
+        if(String(article.author._id) === String(req.session.user._id)){
+            let error;
+            //获取所有的分类
+            const allTabs = SETTING.categorys.map(function (tPair) {
+                return tPair[0];
+            });
+            if(!validator.isLength(title,{min:10,max:50})){
+                error = '文章的标题长度不能少于10个字符或者多于50个字符'
+            }
+            if(!validator.isLength(content,0)){
+                error = '文章的内容不能为空';
+            }
+            if(!category || !allTabs.includes(category)){
+                error = '必须选择一个分类';
+            }
+            if(error) {
+                res.end(error);
+            }else{
+                article.title = title;
+                article.content = content;
+                article.category = category;
+                article.update_time = new Date();
+                article.save().then((article)=>{
+                    at.sendMessageToMentionUsers(content,article._id,req.session.user._id);
+                    return res.json({url:`/question/${article._id}`});
+                }).catch(err=>{
+                    return res.end(err);
+                })
+            }
+        }else{
+            return res.end('此话题您不具备编辑的能力');
+        }
+    })
 }
 //删除这篇文章
 exports.delete = (req,res,next)=>{

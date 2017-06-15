@@ -227,8 +227,12 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success(function(data){
             //在对应的列表中插入
-            parent.find('.newContent').append(data);
-            editor.value('');
+            if(typeof data === 'object'){
+                alert(data.message);
+            }else{
+                parent.find('.newContent').append(data);
+                editor.value('');
+            }
         }).error(function(err){
             console.log(err);
         })
@@ -257,9 +261,28 @@ editApp.controller('editController',($scope,$http)=>{
             $scope.$apply('');
         }
     });
-    $scope.updateForm = ()=>{
-        console.log($scope.formData);
-        console.log(simplemde.value());
+    $scope.updateForm = (event)=>{
+        let form = $(event.currentTarget);
+        let url = form.attr('target');
+        $scope.formData.content = simplemde.value();
+        $http({
+            method:'POST',
+            url:url,
+            data:$.param($scope.formData),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        }).success((data)=>{
+            if(typeof data === 'object'){
+                window.location.href = data.url;
+            }else{
+                $scope.error = data;
+                $('#errorbox').fadeIn();
+                setTimeout(function(){
+                    $('#errorbox').fadeOut();
+                },1000)
+            }
+        }).error((err)=>{
+            console.log(err);
+        })
     }
 })
 

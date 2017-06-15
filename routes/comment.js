@@ -17,6 +17,9 @@ exports.add = (req,res,next)=>{
     let article_id = req.params.article_id;
     //获取回复的内容
     let content = validator.trim(String(req.body.comment_content));
+    if(content === ''){
+        return res.json({message:'内容不能为空'});
+    }
     //当前一级回复的ID
     let reply_id = req.body.reply_id;
     //当前你回复谁的用户ID

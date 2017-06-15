@@ -43,7 +43,9 @@
         <div class="col-sm-6 col-sm-offset-6">
             <ul class="pagination">
                 <% pageInfo.pages.forEach(function(page){%>
-                <li><a class="loadpage" href="javascript:void(0)"><%= page %></a></li>
+                <li class="<%= page == pageInfo.currentPage ? 'active':'' %>">
+                    <a class="loadpage" href="javascript:void(0)"><%= page %></a>
+                </li>
                 <%})%>
             </ul>
         </div>
