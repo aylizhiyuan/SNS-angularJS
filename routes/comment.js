@@ -76,10 +76,12 @@ exports.add = (req,res,next)=>{
             //如果当前登录的用户就是回复的那个人，那么回复了也不会发送消息
             if(reply_author_id !== '' && reply_author_id.toString() !== req.session.user._id.toString()){
                 message.sendCommentMessage(reply_author_id,req.session.user._id,article._id,reply_id);
-            }else if(reply_author_id == '' && reply_author_id.toString() !== req.session.user._id.toString()){
+            }else if(reply_author_id == ''){
                 //首先通过reply_id来查询对应的回复的人
                 Reply.getReplyById(reply_id,(err,reply)=>{
-                    message.sendCommentMessage(reply.author,req.session.user._id,article._id,reply_id);
+                    if(reply.author.toString() !== req.session.user._id.toString()){
+                        message.sendCommentMessage(reply.author,req.session.user._id,article._id,reply_id);
+                    }
                 })
             }
             return comment;
@@ -88,7 +90,10 @@ exports.add = (req,res,next)=>{
                 comment.content = at.linkUsers(comment.content);
                 comment.content = markdown.markdown(comment.content);
                 let date = comment.create_time_ago();
-                return res.json({comment:comment,date:date}).end();
+                return res.render('comment-spa',{
+                    comment:comment,
+                    date:date
+                })
             })
         }).catch(err=>{
             return res.end(err);

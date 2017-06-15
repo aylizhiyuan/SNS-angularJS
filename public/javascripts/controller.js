@@ -226,44 +226,8 @@ showApp.controller('reply2Controller',($scope,$http)=>{
             data:$.param(data),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         }).success(function(data){
-            var comment = data.comment;
-            var date = data.date;
-            var message = `
-                <div class="comment-item" id="${comment.author_id._id}" target="${comment.author_id.name}">
-                    <div class="mod-head">
-                        <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/${comment.author_id.name}">
-                            <img src="${comment.author_id.avatar}">
-                        </a>
-                        <div class="title">
-                            <p>
-                                <a class="aw-user-name" href="/user/${comment.author_id.name}">${comment.author_id.name}</a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mod-body clearfix">
-                        <div class="markitup-box">
-                            ${comment.content}
-                        </div>
-                    </div>
-                    <div class="mod-footer">
-                        <span class="text-color-999 pull-right">${date}</span>
-                        <span class="operate">
-                            <a class="agree">
-                                <i class="fa fa-thumbs-o-up"></i>
-                                <b class="count">0</b>
-                            </a>
-                        </span>
-                        <span class="operate">
-                            <a href="javascript:void(0)" class="aw-add-comment  comment_btn">
-                                <i class="fa fa-commenting-o"></i>
-                                回复
-                            </a>
-                        </span>
-                    </div>
-            </div>
-            `;
             //在对应的列表中插入
-            parent.find('.newContent').append(message);
+            parent.find('.newContent').append(data);
             editor.value('');
         }).error(function(err){
             console.log(err);
