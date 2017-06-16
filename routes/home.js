@@ -16,10 +16,62 @@ const SETTING = require('../setting');
 const mail = require('../common/mail');
 //引入生成cookie
 const auth = require('../common/auth');
+//引入Article表
+const Article = require('../model/Article');
 exports.index = (req,res,next)=>{
-    res.render('index',{
-        title:'首页--社区问答系统',
-        layout:'indexTemplate'
+    //首页要获取的数据，所有的文章，热门的用户就可以了
+    let currentPage = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || 20;
+    let category = req.query.category || 'all';
+    let query = {};
+    if(!category || category === 'all'){
+        query.category = {$ne:'job'};
+    }else{
+        query.category = category;
+    }
+    let options = {skip:(currentPage - 1)*limit,limit:limit,sort:'-last_reply_time -create_time'};
+    //获取到所有的文章，按照分页的形式来
+    Article.getArticleByQuery(query,options,(err,articles)=>{
+        if(err){
+            return res.render('error',{
+                message:'',
+                error:err
+            })
+        }
+        //获取分页的数据
+        Article.getCountByQuery(query,(err,all_articles)=>{
+            if(err){
+                return res.render('error',{
+                    message:'',
+                    error:err
+                })
+            }
+            let totalItem = all_articles.length;
+            let totalPage = Math.ceil(totalItem/limit);
+            let pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1;
+            let pageEnd = pageStart + 4 >= totalPage ? totalPage : pageStart + 4;
+            let pageArr = [];
+            for(let i=pageStart;i<=pageEnd;i++){
+                pageArr.push(i);
+            }
+            let pageInfo = {
+                "totalItems":totalItem,
+                "currentPage":currentPage,
+                "limit":limit,
+                "pages":pageArr
+            }
+            //最后再获取到热门用户的列表
+            User.find({},'',{limit:10,sort:'-score'},(err,users)=>{
+                res.render('index',{
+                    title:'首页--社区问答系统',
+                    layout:'indexTemplate',
+                    articles:articles,
+                    pageInfo:pageInfo,
+                    hotUsers:users,
+                    category:category
+                })
+            })
+        })
     })
 }
 exports.login = (req,res,next)=>{

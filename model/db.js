@@ -6,6 +6,7 @@ const setting = require('../setting');
 //nodeJS加密模块
 const crypto = require('crypto');
 const url = require('url');
+const Article = require('../model/Article');
 //这句话说明我们使用的promise对象是ES6中原生的promise对象.
 mongoose.Promise = global.Promise;
 mongoose.connect(`mongodb://${setting.host}/${setting.db}`);
@@ -73,7 +74,33 @@ const DbSet = {
         oldPsd += decipher.update(data,"hex","utf8");
         oldPsd += decipher.final("utf8");
         return oldPsd;
+    },
+    //分页查询
+    pagination:function (obj,req,res) {
+        var params = url.parse(req.url,true);
+        var currentPage = Number(params.query.currentPage) || 1;
+        var limit = Number(params.query.limit) || 20;
+        var startNum = (currentPage - 1) * limit;
+        var pageInfo;
+        if(obj === Article){
+            var query = obj.find({}).sort({last_reply_time:'-1',create_time:'-1'}).populate('author').populate('last_reply').skip(startNum).limit(limit);
+        }
+        query.exec(function(err,docs){
+            if(err){
+                console.log(err);
+            }else{
+                pageInfo = {
+                    "totalItems":docs.length,
+                    "currentPage":currentPage,
+                    "limit":limit,
+                    "startNum":Number(startNum)
+                };
+                return res.json({
+                    docs : docs,
+                    pageInfo : pageInfo
+                })
+            }
+        })
     }
-
 }
 module.exports = DbSet

@@ -132,6 +132,13 @@ ArticleSchema.statics = {
         }).catch(err=>{
             return callback(err);
         })
+    },
+    getCountByQuery:(query,callback)=>{
+        Article.count(query).then((all_articles)=>{
+            return callback(null,all_articles);
+        }).catch(err=>{
+            return callback(err);
+        })
     }
 }
 ArticleSchema.plugin(BaseModel);

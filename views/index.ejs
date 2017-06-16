@@ -4,56 +4,52 @@
             <div class="aw-content-wrap clearfix">
                 <div class="col-sm-12 col-md-9 aw-main-content">
                     <!--文章的检索-->
-                    <!--<ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
-                        <li><a href="#">分享</a></li>
-                        <li><a href="#">问答</a></li>
-                        <li><a href="#">招聘</a></li>
+                    <ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
+                        <li><a href="/?category=job">招聘</a></li>
+                        <li><a href="/?category=ask">问答</a></li>
+                        <li><a href="/?category=share">分享</a></li>
                         <h2 class="hidden-xs"><i class="fa fa-bars"></i> 发现</h2>
-                    </ul>-->
+                    </ul>
                     <!--文章的检索-->
                     <!--文章列表-->
                     <div class="aw-mod aw-explore-list">
                         <div class="mod-body">
                             <div class="aw-common-list">
+                                <% if(articles.length > 0){%>
+                                <% articles.forEach(function(article){%>
                                 <div class="aw-item">
-                                    <a class="aw-user-name hidden-xs" href="#"><img src="/images/avatar-max-img.png"></a>
+                                    <a class="aw-user-name hidden-xs" href="/user/<%= article.author.name %>">
+                                        <img src="<%= article.author.avatar %>">
+                                    </a>
                                     <div class="aw-question-content">
                                         <h4>
-                                            <a href="#">文章的标题</a>
+                                            <a href="/question/<%= article._id %>"><%= article.title %></a>
                                             <span class="aw-user-name" style="background-color:#99cfff;color:white">
-                                                &nbsp;分享&nbsp;
+                                                &nbsp;<%= article.categoryName %>&nbsp;
                                             </span>
                                         </h4>
-                                        <a href="#"  class="pull-right text-color-999">回复</a>
-                                        <p>
-                                            <a href="#" class="aw-user-name">作者</a>
-                                            <span class="text-color-999">
-                                                发起了问题 • 1 人关注 • 0 个回复 • 9 次浏览 • 3 小时前
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="aw-item">
-                                    <a class="aw-user-name hidden-xs" href="#"><img src="/images/avatar-max-img.png"></a>
-                                    <div class="aw-question-content">
-                                        <h4>
-                                            <a href="#">文章的标题</a>
-                                            <span class="aw-user-name" style="background-color:#99cfff;color:white">
-                                                &nbsp;分享&nbsp;
-                                            </span>
-                                        </h4>
+                                        <% if(article.last_reply){%>
                                         <div class="pull-right hidden-xs contribute">
                                             <span class="pull-right text-color-999">贡献</span>
-                                            <a class="aw-user-name" href="#"><img src="/images/avatar-max-img.png"></a>
+                                            <a class="aw-user-name" href="/user/">
+                                                <img src="">
+                                            </a>
                                         </div>
+                                        <%}else{%>
+                                        <a href="/question/<%= article._id %>#reply_form"  class="pull-right text-color-999">回复</a>
+                                        <%}%>
                                         <p>
-                                            <a href="#" class="aw-user-name">作者</a>
+                                            <a href="/user/<%= article.author.name %>" class="aw-user-name">
+                                                <%= article.author.name %>
+                                            </a>
                                             <span class="text-color-999">
                                                 发起了问题 • 1 人关注 • 0 个回复 • 9 次浏览 • 3 小时前
                                             </span>
                                         </p>
                                     </div>
                                 </div>
+                                <%})%>
+                                <%}%>
                             </div>
                         </div>
                         <div class="mod-footer">
