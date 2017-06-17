@@ -58,7 +58,9 @@
                                 <ul class="pagination pull-right">
                                     <% pageInfo.pages.forEach(function(page){%>
                                     <li class="<%= page == pageInfo.currentPage ? 'active':'' %>">
-                                        <a class="loadpage" href="/?page=<%= page %>"><%= page %></a>
+                                        <a class="loadpage" href="/?page=<%= page %><%= category !== '' ? '&category=' + category : '' %>">
+                                            <%= page %>
+                                        </a>
                                     </li>
                                     <%})%>
                                 </ul>
