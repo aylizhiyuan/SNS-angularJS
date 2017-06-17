@@ -71,6 +71,11 @@ const ArticleSchema = new Schema({
         type:Date,
         default:Date.now
     },
+    //最后回复的那个人
+    last_reply_author:{
+        type:String,
+        ref:'User'
+    },
     //增加删除功能
     deleted:{
         type:Boolean,
@@ -96,7 +101,7 @@ ArticleSchema.statics = {
     //获取文章的所有信息
     getFullArticle:(id,callback)=>{
         //1.首先检查下这篇文章是否存在
-        Article.findOne({'_id':id,'deleted':false}).populate('author').populate('last_reply').then(article=>{
+        Article.findOne({'_id':id,'deleted':false}).populate('author').populate('last_reply').populate('last_reply_author').then(article=>{
             if(!article){
                 return callback(null,'该问题不存在或者已被删除');
             }
@@ -115,7 +120,7 @@ ArticleSchema.statics = {
     //根据条件获取文章列表
     getArticleByQuery:(query,opt,callback)=> {
         query.deleted = false;
-        Article.find(query,{},opt).populate('author').populate('last_reply').then((articles)=>{
+        Article.find(query,{},opt).populate('author').populate('last_reply').populate('last_reply_author').then((articles)=>{
             if(articles.length == 0){
                 return callback(null,[]);
             }

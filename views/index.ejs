@@ -5,9 +5,9 @@
                 <div class="col-sm-12 col-md-9 aw-main-content">
                     <!--文章的检索-->
                     <ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
-                        <li><a href="/?category=job">招聘</a></li>
-                        <li><a href="/?category=ask">问答</a></li>
-                        <li><a href="/?category=share">分享</a></li>
+                        <li class="<%= category == 'job' ? 'active' : '' %>"><a href="/?category=job">招聘</a></li>
+                        <li class="<%= category == 'ask' ? 'active' : '' %>"><a href="/?category=ask">问答</a></li>
+                        <li class="<%= category == 'share' ? 'active' : '' %>"><a href="/?category=share">分享</a></li>
                         <h2 class="hidden-xs"><i class="fa fa-bars"></i> 发现</h2>
                     </ul>
                     <!--文章的检索-->
@@ -28,11 +28,11 @@
                                                 &nbsp;<%= article.categoryName %>&nbsp;
                                             </span>
                                         </h4>
-                                        <% if(article.last_reply){%>
+                                        <% if(article.last_reply && article.last_reply_author){%>
                                         <div class="pull-right hidden-xs contribute">
                                             <span class="pull-right text-color-999">贡献</span>
-                                            <a class="aw-user-name" href="/user/">
-                                                <img src="">
+                                            <a class="aw-user-name" href="/user/<%= article.last_reply_author.name %>">
+                                                <img src="<%= article.last_reply_author.avatar %>">
                                             </a>
                                         </div>
                                         <%}else{%>
@@ -43,7 +43,7 @@
                                                 <%= article.author.name %>
                                             </a>
                                             <span class="text-color-999">
-                                                发起了问题 • 1 人关注 • 0 个回复 • 9 次浏览 • 3 小时前
+                                                发起了问题  • <%= article.comment_num %> 个回复 • <%= article.click_num %> 次浏览 • <%= article.create_time_ago() %>
                                             </span>
                                         </p>
                                     </div>
@@ -53,14 +53,17 @@
                             </div>
                         </div>
                         <div class="mod-footer">
+                            <%if(articles.length > 0 && pageInfo.pages){%>
                             <div class="page-control">
                                 <ul class="pagination pull-right">
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
+                                    <% pageInfo.pages.forEach(function(page){%>
+                                    <li class="<%= page == pageInfo.currentPage ? 'active':'' %>">
+                                        <a class="loadpage" href="/?page=<%= page %>"><%= page %></a>
+                                    </li>
+                                    <%})%>
                                 </ul>
                             </div>
+                            <%}%>
                         </div>
                     </div>
                 </div>

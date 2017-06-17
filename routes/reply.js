@@ -37,6 +37,7 @@ exports.add = (req,res,next)=>{
             //然后更新文章最后回复的信息
             Article.findOne({'_id':reply.article_id}).then((article)=>{
                 article.last_reply = reply._id;
+                article.last_reply_author = reply.author;
                 article.last_reply_time = new Date();
                 article.comment_num += 1;
                 article.save();

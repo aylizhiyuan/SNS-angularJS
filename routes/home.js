@@ -46,7 +46,7 @@ exports.index = (req,res,next)=>{
                     error:err
                 })
             }
-            let totalItem = all_articles.length;
+            let totalItem = all_articles;
             let totalPage = Math.ceil(totalItem/limit);
             let pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1;
             let pageEnd = pageStart + 4 >= totalPage ? totalPage : pageStart + 4;
