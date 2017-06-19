@@ -1,4 +1,4 @@
-<div class="aw-container-wrap">
+<div class="aw-container-wrap" ng-app="settingApp" ng-controller="settingController">
     <div class="container">
         <div class="row">
             <div class="aw-content-wrap clearfix">
@@ -16,46 +16,51 @@
                         <div class="aw-mod">
                             <div class="mod-body">
                                 <!--基本信息-->
-                               <div class="aw-mod mod-base">
-                                   <div class="mod-head">
-                                       <h3>基本信息</h3>
-                                   </div>
-                                   <form action="">
-                                       <div class="mod-body">
-                                           <dl>
-                                               <dt>账号:</dt>
-                                               <dd>148334733@qq.com</dd>
-                                           </dl>
-                                           <dl>
-                                               <dt>邮箱:</dt>
-                                               <dd>148334733@qq.com</dd>
-                                           </dl>
-                                           <dl>
-                                               <dt><label>个性签名:</label></dt>
-                                               <dd class="introduce">
-                                                   <input class="form-control" type="text">
-                                               </dd>
-                                           </dl>
-                                           <div class="side-bar">
-                                               <dl>
-                                                   <dt class="pull-left">
-                                                       <img class="aw-border-radius-5" src="/images/default-avatar.jpg">
-                                                   </dt>
-                                                   <dd class="pull-left">
-                                                       <h5>头像设置</h5>
-                                                       <p>支持jpg、gif、png等格式的图片(其他的图片格式不支持)</p>
-                                                       <a class="btn btn-mini btn-success">
-                                                           上传头像
-                                                       </a>
-                                                   </dd>
-                                               </dl>
-                                           </div>
-                                       </div>
-                                   </form>
-                               </div>
-                            </div>
-                            <div class="mod-footer clearfix">
-                                <a href="#" class="btn btn-large btn-success text-center">保存</a>
+                                <form name="uploadForm" ng-submit="updateUser()">
+                                    <div class="aw-mod mod-base">
+                                        <div class="mod-head">
+                                            <h3>基本信息</h3>
+                                        </div>
+                                        <div class="mod-body">
+                                            <dl>
+                                                <dt>账号:</dt>
+                                                <dd><%= userInfo.name %></dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>邮箱:</dt>
+                                                <dd><%= userInfo.email %></dd>
+                                            </dl>
+                                            <dl>
+                                                <dt><label>个性签名:</label></dt>
+                                                <dd class="introduce">
+                                                   <textarea target="<%= userInfo.motto %>" name="motto" rows="3" cols="40" ng-model="formData.motto" required style="padding:10px">
+
+                                                   </textarea>
+                                                    <label ng-cloak for="inputError" class="control-label text-danger" ng-show="uploadForm.motto.$invalid && !myForm.motto.$pristine">
+                                                        <i class="glyphicon glyphicon-info-sign"></i>请填写正确的介绍
+                                                    </label>
+                                                </dd>
+                                            </dl>
+                                            <div class="side-bar">
+                                                <dl>
+                                                    <dt class="pull-left">
+                                                        <img id="userLogo" target="<%= userInfo.avatar %>" class="aw-border-radius-5" ng-src="{{formData.avatar}}">
+                                                    </dt>
+                                                    <dd class="pull-left">
+                                                        <h5>头像设置</h5>
+                                                        <p>支持jpg、gif、png等格式的图片(其他的图片格式不支持)</p>
+                                                        <a href="javascript:void(0)" class="btn btn-mini btn-success" id="uploadLogoImg">
+                                                            上传头像
+                                                        </a>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        <div class="mod-footer clearfix">
+                                            <input type="submit" ng-disabled="uploadForm.$invalid" class="btn btn-large btn-success text-center">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -37,15 +37,15 @@ router.get('/question/:id',question.index)
 
 //-------------------------------用户页面----------------------------------
 //个人设置
-router.get('/setting',user.setting);
+router.get('/setting',auth.userRequired,user.setting);
 //用户列表
-router.get('/users',user.all);
+router.get('/users',auth.userRequired,user.all);
 //个人中心
-router.get('/user/:name',user.index);
+router.get('/user/:name',auth.userRequired,user.index);
 //用户发布问题的列表
-router.get('/user/:name/questions',user.questions);
+router.get('/user/:name/questions',auth.userRequired,user.questions);
 //用户回复的列表
-router.get('/user/:name/replys',user.replys);
+router.get('/user/:name/replys',auth.userRequired,user.replys);
 
 //-----------------------------留言回复列表-------------------------------------
 router.post('/:article_id/reply',auth.userRequired,reply.add) //一级回复
@@ -53,8 +53,8 @@ router.post('/:article_id/comment',auth.userRequired,comment.add) //二级回复
 router.post('/:reply_id/showComment',auth.userRequired,comment.show) //显示所有的二级回复
 //------------------------------消息列表----------------------------------------
 router.get('/my/messages',auth.userRequired,message.index);
-router.get('/updateMessage/:id',message.updateMessage);
-router.get('/updateAllMessage',message.updateAllMessage);
+router.get('/updateMessage/:id',auth.userRequired,message.updateMessage);
+router.get('/updateAllMessage',auth.userRequired,message.updateAllMessage);
 module.exports = router;
 
 

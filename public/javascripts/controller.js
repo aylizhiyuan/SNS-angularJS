@@ -109,7 +109,6 @@ var messageApp = angular.module('messageApp',[]);
 messageApp.controller('messageController',($scope,$http)=>{
     $scope.readOne = (index)=>{
         let messageId = $('.aw-item').eq(index).attr('message_id');
-        console.log(messageId);
         $http({
             method:'GET',
             url:'/updateMessage/'+ messageId
@@ -298,5 +297,17 @@ editApp.controller('editController',($scope,$http)=>{
             console.log(err);
         })
     }
+})
+//个人设置
+var settingApp = angular.module('settingApp',[])
+settingApp.controller('settingController',($scope,$http)=>{
+    $scope.formData = {
+        motto:$('textarea[name=motto]').attr('target'),
+        avatar:$('#userLogo').attr('target')
+    }
+    $scope.updateUser = ()=>{
+        alert(1);
+    }
+
 })
 
