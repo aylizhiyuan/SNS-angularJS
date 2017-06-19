@@ -38,6 +38,8 @@ router.get('/question/:id',question.index)
 //-------------------------------用户页面----------------------------------
 //个人设置
 router.get('/setting',auth.userRequired,user.setting);
+//上传头像
+router.post('/uploadImage',auth.userRequired,user.upload);
 //用户列表
 router.get('/users',auth.userRequired,user.all);
 //个人中心

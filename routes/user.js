@@ -40,3 +40,6 @@ exports.replys = (req,res,next)=>{
         resource:mapping.center
     })
 }
+exports.upload = (req,res,next)=>{
+    console.log(req.file);
+}
