@@ -2,6 +2,7 @@
  * Created by hama on 2017/5/9.
  */
 module.exports = {
+    imgZip:true,
     host:'localhost',
     port:27017,
     db:'superblog',

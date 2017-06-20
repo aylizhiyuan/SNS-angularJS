@@ -305,6 +305,32 @@ settingApp.controller('settingController',($scope,$http)=>{
         motto:$('textarea[name=motto]').attr('target'),
         avatar:$('#userLogo').attr('target')
     }
+    $('#uploadULogoImg').uploadify({
+        'swf':'/plugins/uploadify/uploadify.swf',
+        'uploader':'/uploadImage?type=images&key=userlogo',
+        'buttonText':'上传图片',
+        'buttonClass':'uploadify-btn-default',
+        'width':100,
+        'auto':true,
+        'fileTypeDesc': 'Image Files',
+        'fileTypeExts':'*.gif; *.jpg; *.png',
+        'multi':false,
+        //上传成功执行的函数
+        'onUploadSuccess':function(file,data,response){
+            if(data === 'typeError'){
+                alert('文件类型不正确，请重新尝试');
+                return;
+            }else{
+                //alert('上传成功');
+                $("#userLogo").attr("src",data);
+                $scope.formData.avatar = data;
+            }
+        },
+        'onComplete': function(event, queueID, fileObj, response, data) {
+            //当单个文件上传完成后触发
+            //alert("文件:" + fileObj.name + " 上传成功！");
+        }
+    })
     $scope.updateUser = ()=>{
         alert(1);
     }
