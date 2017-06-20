@@ -24,7 +24,7 @@
                                         </select>
                                         <div style="height: 20px">
                                             <span ng-cloak ng-show="createForm.category.$invalid && !createForm.category.$pristine" class="text-danger">
-                                            !!!请正确选择版块
+                                            <i class="glyphicon glyphicon-info-sign"></i>请正确选择版块
                                         </span>
                                         </div>
                                     </div>
@@ -39,7 +39,7 @@
                                                 <ul class="aw-dropdown-list"></ul>
                                             </div>
                                             <span ng-cloak ng-show="createForm.title.$invalid && !createForm.title.$pristine" class="text-danger">
-                                                !!!问题的长度不能小于10个字符或者大于50个字符
+                                                <i class="glyphicon glyphicon-info-sign"></i>问题的长度不能小于10个字符或者大于50个字符
                                             </span>
                                         </div>
                                     </div>
@@ -51,7 +51,10 @@
                                     </div>
                                     <div class="mod-body">
                                        <div style="height:20px">
-                                           <span ng-cloak ng-show="!isEmpty" class="text-danger" id="question_detail_message">内容不能为空</span>
+                                           <span ng-cloak ng-show="!isEmpty" class="text-danger" id="question_detail_message">
+                                               <i class="glyphicon glyphicon-info-sign"></i>
+                                               内容不能为空
+                                           </span>
                                        </div>
                                     </div>
                                 </div>

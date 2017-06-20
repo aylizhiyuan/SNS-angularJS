@@ -3,6 +3,12 @@
  */
 //引入静态
 const mapping = require('../static');
+const formidable = require('formidable');
+const gm = require('gm');
+const mime = require('../util/mime').types;
+const system = require('../util/system');
+const SETTING = require('../setting');
+const url = require('url');
 exports.index = (req,res,next)=>{
     res.render('user-center',{
         title:'个人中心--社区问答系统',
@@ -41,5 +47,21 @@ exports.replys = (req,res,next)=>{
     })
 }
 exports.upload = (req,res,next)=>{
-    console.log(req.file);
+    //获取传入的参数，如果有的话
+    let params = url.parse(req.url,true);
+    let form = new formidable.IncomingForm();
+    form.uploadDir = 'public/upload/images/';
+    let files = [];
+    let fields = [];
+    let docs = [];
+    let updatePath = 'public/upload/images/';
+    let smallImgPath = 'public/upload/smallimgs/';
+    form.on('field',(field,value)=>{
+        fields.push([field,value]);
+        console.log(fields);
+    }).on('file',(field,file)=>{
+        files.push([field,file]);
+        docs.push(file);
+
+    })
 }

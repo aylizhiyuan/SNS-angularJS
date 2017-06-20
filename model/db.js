@@ -101,6 +101,18 @@ const DbSet = {
                 })
             }
         })
-    }
+    },
+    getCount:function(obj,req,res,conditions){ // 查询指定对象的数量
+        obj.count(conditions, function (err, count) {
+            if (err){
+                console.log(err);
+            }else{
+                return res.json({
+                    count : count
+                });
+            }
+
+        });
+    },
 }
 module.exports = DbSet
