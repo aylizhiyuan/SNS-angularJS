@@ -40,6 +40,8 @@ router.get('/question/:id',question.index)
 router.get('/setting',auth.userRequired,user.setting);
 //上传头像
 router.post('/uploadImage',auth.userRequired,user.upload);
+//更新个人设置
+router.post('/updateUser/:id',auth.userRequired,user.updateUser);
 //用户列表
 router.get('/users',auth.userRequired,user.all);
 //个人中心

@@ -333,9 +333,22 @@ settingApp.controller('settingController',($scope,$http)=>{
             //alert("文件:" + fileObj.name + " 上传成功！");
         }
     })
-    $scope.updateUser = ()=>{
-        alert(1);
+    $scope.updateUser = (event)=>{
+        $http({
+            method:'POST',
+            url:$(event.currentTarget).attr('target'),
+            data:$.param($scope.formData),
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).success((data)=>{
+            if(data == 'success'){
+                alert('修改成功');
+                window.location.reload()
+            }else{
+                alert(data);
+            }
+        }).error(err=>{
+            console.log(err);
+        })
     }
-
 })
 

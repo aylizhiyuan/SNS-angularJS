@@ -4,6 +4,7 @@
 //引入静态
 const mapping = require('../static');
 const formidable = require('formidable');
+const validator = require('validator');
 const gm = require('gm');
 const mime = require('../util/mime').types;
 const system = require('../util/system');
@@ -11,6 +12,7 @@ const SETTING = require('../setting');
 const url = require('url');
 const moment = require('moment');
 const fs = require('fs');
+const User = require('../model/User');
 exports.index = (req,res,next)=>{
     res.render('user-center',{
         title:'个人中心--社区问答系统',
@@ -128,4 +130,38 @@ exports.upload = (req,res,next)=>{
         err && console.log('formidabel error : ' + err);
         console.log('parsing done');
     });
+}
+exports.updateUser = (req,res,next)=>{
+    let id = req.params.id;
+    let motto = req.body.motto;
+    let avatar = req.body.avatar;
+    let error;
+    //数据验证
+    if(!validator.isLength(motto,0)){
+        error = '个性签名不能为空';
+    }
+    if(!validator.isLength(avatar,0)){
+        error = '个人头像上传失败啦';
+    }
+    if(error){
+        return res.end(error);
+    }else{
+        User.getUserById(id,(err,user)=>{
+            if(err){
+                return res.end(err);
+            }
+            if(!user){
+                return res.end('该用户不存在');
+            }
+            user.update_time = new Date();
+            user.motto = motto;
+            user.avatar = avatar;
+            user.save().then((user)=>{
+                req.session.user = user;
+                return res.end('success');
+            }).catch(err=>{
+                return res.end(err);
+            })
+        })
+    }
 }

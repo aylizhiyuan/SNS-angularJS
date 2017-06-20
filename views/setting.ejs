@@ -16,7 +16,7 @@
                         <div class="aw-mod">
                             <div class="mod-body">
                                 <!--基本信息-->
-                                <form name="uploadForm" ng-submit="updateUser()">
+                                <form name="uploadForm" ng-submit="updateUser($event)" target="/updateUser/<%= userInfo._id %>">
                                     <div class="aw-mod mod-base">
                                         <div class="mod-head">
                                             <h3>基本信息</h3>
