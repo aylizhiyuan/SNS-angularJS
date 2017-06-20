@@ -44,12 +44,12 @@
                                             <div class="side-bar">
                                                 <dl>
                                                     <dt class="pull-left">
-                                                        <img id="userLogo" target="<%= userInfo.avatar %>" class="aw-border-radius-5" ng-src="{{formData.avatar}}">
+                                                        <img ng-cloak id="userLogo" target="<%= userInfo.avatar %>" class="aw-border-radius-5" ng-src="{{formData.avatar}}">
                                                     </dt>
                                                     <dd class="pull-left">
                                                         <h5>头像设置</h5>
                                                         <p>支持jpg、gif、png等格式的图片(其他的图片格式不支持)</p>
-                                                        <a id="uploadULogoImg" class="btn btn-success" href="javascript:void(0)">
+                                                        <a id="uploadULogoImg" href="javascript:void(0)">
                                                             修改头像
                                                         </a>
                                                     </dd>

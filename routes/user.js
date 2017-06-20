@@ -85,7 +85,7 @@ exports.upload = (req,res,next)=>{
         if(fileType == 'images'){
             typeKey = "img"
         }
-        newFileName = typeKey + ms + "."+thisType;
+        newFileName = typeKey + ms + "." + thisType;
 
         if(fileType == 'images'){
             if(realFileType.fileType == 'jpg' || realFileType.fileType == 'jpeg' || realFileType.fileType == 'png'  || realFileType.fileType == 'gif'){
@@ -95,31 +95,16 @@ exports.upload = (req,res,next)=>{
                             console.log(err)
                         }else{
                             // 图片缩放
-                            var input =  updatePath + newFileName;
+                            var input = updatePath + newFileName;
                             var out = smallImgPath + newFileName;
-
-                            if(fileKey == 'ctTopImg'){
-                                gm(input).resize(270,162,'!').autoOrient().write(out, function (err) {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        console.log('done');
-                                    }
-                                });
-                            }else if(fileKey == 'plugTopImg'){ // 插件主题图片
-                                gm(input).resize(270,162,'!').autoOrient().write(out, function (err) {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        console.log('done');
-                                    }
-                                });
-                            }else if(fileKey == 'userlogo'){ // 用户头像
+                            if(fileKey == 'userlogo'){ // 用户头像
                                 gm(input).resize(100,100,'!').autoOrient().write(out, function (err) {
                                     if (err) {
                                         console.log(err);
                                     } else {
                                         console.log('done');
+                                        //压缩后再返回，否则的话，压缩会放在后边，导致链接失效
+                                        return res.end('/upload/smallimgs/' + newFileName);
                                     }
                                 });
                             }
@@ -130,18 +115,12 @@ exports.upload = (req,res,next)=>{
                         if(err){
                             console.log(err)
                         }
+                        return res.end('/upload/images/' + newFileName);
                     })
                 }
             }else{
                 res.end('typeError');
             }
-        }
-    }).on('end',function(){
-        // 返回文件路径
-        if(SETTING.imgZip && (fileKey == 'ctTopImg' || fileKey == 'plugTopImg' || fileKey == 'userlogo')){
-            res.end('/upload/smallimgs/'+newFileName);
-        }else{
-            res.end('/upload/images/'+newFileName);
         }
     })
     //该方法会转换请求中所包含的表单数据，callback会包含所有字段域和文件信息

@@ -322,8 +322,10 @@ settingApp.controller('settingController',($scope,$http)=>{
                 return;
             }else{
                 //alert('上传成功');
-                $("#userLogo").attr("src",data);
+                let url = data.toString();
+                $('#userLogo').attr('src',`${url}`);
                 $scope.formData.avatar = data;
+                $scope.$apply('');
             }
         },
         'onComplete': function(event, queueID, fileObj, response, data) {
