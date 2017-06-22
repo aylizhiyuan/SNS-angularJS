@@ -13,11 +13,39 @@ const url = require('url');
 const moment = require('moment');
 const fs = require('fs');
 const User = require('../model/User');
+const Article = require('../model/Article');
+const Reply = require('../model/Reply');
 exports.index = (req,res,next)=>{
-    res.render('user-center',{
-        title:'个人中心--社区问答系统',
-        layout:'indexTemplate',
-        resource:mapping.center
+    //得到用户的姓名
+    let name = req.params.name;
+    //根据用户的姓名，查到用户所对应的信息
+    User.getUserByName(name,(err,user)=>{
+        if(!user){
+            return res.render('error',{
+                error:'',
+                message:'该用户不存在'
+            })
+        }else{
+            let query = {author:user._id};
+            let opt = {limit:5,sort:'-create_time'};
+            //1.这个用户发布的文章  Article表
+            Article.getArticleByQuery(query,opt,(err,articles)=>{
+                if(err){
+                    return res.render('error',{error:err,message:''});
+                }
+                //2.这个用户回复过的问题 Reply表
+                Reply.getRepliesByAuthorId(user._id,{limit:5,sort:'-create_time'},(err,replies)=>{
+                    return res.render('user-center',{
+                        title:'个人中心--社区问答系统',
+                        layout:'indexTemplate',
+                        resource:mapping.center,
+                        userInfo:user,
+                        articles:articles,
+                        replies:replies
+                    })
+                })
+            })
+        }
     })
 }
 exports.all = (req,res,next)=>{
@@ -36,18 +64,53 @@ exports.setting = (req,res,next)=>{
 }
 exports.questions = (req,res,next)=>{
     //用户发布的所有的问题列表
-    res.render('question-list',{
-        title:'用户发布列表--社区问答系统',
-        layout:'indexTemplate',
-        resource:mapping.center
+    let name = req.params.name;
+    User.getUserByName(name,(err,user)=>{
+        if(!user){
+            return res.render('error',{
+                error:'',
+                message:'该用户不存在'
+            })
+        }else{
+            let query = {author:user._id};
+            let opt = {sort:'-create_time'};
+            Article.getArticleByQuery(query,opt,(err,articles)=>{
+                if(err){
+                    return res.render('error',{error:err,message:''});
+                }
+                res.render('question-list',{
+                    title:'用户发布列表--社区问答系统',
+                    layout:'indexTemplate',
+                    resource:mapping.center,
+                    userInfo:user,
+                    articles:articles
+                })
+            })
+        }
     })
 }
 exports.replys = (req,res,next)=>{
-    //用户发布的所有的回复列表
-    res.render('reply-list',{
-        title:'用户回复列表--社区问答系统',
-        layout:'indexTemplate',
-        resource:mapping.center
+    //得到用户的姓名
+    let name = req.params.name;
+    //根据用户的姓名，查到用户所对应的信息
+    User.getUserByName(name,(err,user)=>{
+        if(!user){
+            return res.render('error',{
+                error:'',
+                message:'该用户不存在'
+            })
+        }else{
+            //2.这个用户回复过的问题 Reply表
+            Reply.getRepliesByAuthorId(user._id,{sort:'-create_time'},(err,replies)=>{
+                return res.render('reply-list',{
+                    title:'个人中心--社区问答系统',
+                    layout:'indexTemplate',
+                    resource:mapping.center,
+                    userInfo:user,
+                    replies:replies
+                })
+            })
+        }
     })
 }
 exports.upload = (req,res,next)=>{

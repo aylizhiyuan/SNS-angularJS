@@ -6,10 +6,10 @@
     <div class="mod-body">
         <dl>
             <dt class="pull-left aw-border-radius-5">
-                <a href="#"><img src="<%= article.author.avatar %>"></a>
+                <a href="/user/<%= article.author.name %>"><img src="<%= article.author.avatar %>"></a>
             </dt>
             <dd class="pull-left">
-                <a class="aw-user-name" href="#"><%= article.author.name %></a>
+                <a class="aw-user-name" href="/user/<%= article.author.name %>"><%= article.author.name %></a>
                 <a class="pull-right">关注</a>
             </dd>
         </dl>

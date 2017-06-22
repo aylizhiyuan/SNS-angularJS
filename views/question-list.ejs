@@ -5,7 +5,7 @@
                 <div class="col-sm-12 col-md-9 aw-main-content">
                     <div class="aw-mod aw-user-detail-box">
                         <div class="mod-head">
-                            <img src="/images/default-avatar.jpg">
+                            <img src="<%= userInfo.avatar %>">
                             <span class="pull-right operate">
                                 <a href="#" class="follow btn btn-normal btn-success">
                                     <span>关注</span>
@@ -13,8 +13,8 @@
                                     <b>0</b>
                                 </a>
                             </span>
-                            <h1>李志远</h1>
-                            <p class="text-color-999">想说点什么吧。。。</p>
+                            <h1><%= userInfo.name %></h1>
+                            <p class="text-color-999"><%= userInfo.motto %></p>
                             <p class="aw-user-flag"></p>
                         </div>
                         <div class="mod-body">
@@ -22,17 +22,11 @@
                                 <span>
                                     <i class="fa fa-bar-chart-o"></i>
                                     积分:
-                                    <em class="aw-text-color-orange">1980</em>
+                                    <em class="aw-text-color-orange"><%= userInfo.score %></em>
                                 </span>
                                 <span>
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    赞同:
-                                    <em class="aw-text-color-orange">0</em>
-                                </span>
-                                <span>
-                                    <i class="fa fa-heart-o"></i>
-                                    感谢:
-                                    <em class="aw-text-color-orange">10</em>
+                                    注册时间:
+                                    <em class="aw-text-color-orange"><%= userInfo.create_time_ago() %></em>
                                 </span>
                             </div>
                         </div>
@@ -52,25 +46,24 @@
                                     </div>
                                     <div class="mod-body">
                                         <div class="aw-profile-publish-list">
+                                            <% articles.forEach(function(article){%>
                                             <div class="aw-item">
                                                 <div class="mod-head">
                                                     <h4>
-                                                        <a href="#">[已经解决，里面有解决代码]登录框注册框的问题，打开登录框，在登录框的板面上点击去注册，打开注册框，但登录框依然在，没有关闭掉</a>
+                                                        <a href="/question/<%= article._id %>">
+                                                            <%= article.title %>
+                                                        </a>
                                                     </h4>
                                                 </div>
                                                 <div class="mod-body">
                                                     <span class="aw-border-radius-5 count pull-left">
-                                                        <i class="fa fa-comment-o"></i>1
+                                                        <i class="fa fa-comment-o"></i><%= article.comment_num %>
                                                     </span>
-                                                    <p class="aw-hide-txt">103 次浏览  • 1 个关注</p>
-                                                    <p class="text-color-999">2017-04-16 19:53</p>
-                                                </div>
-                                                <div class="mod-footer">
-                                                    <a class="aw-load-more-content" id="bp_user_actions_questions_more" data-page="1">
-                                                        <span>更多</span>
-                                                    </a>
+                                                    <p class="aw-hide-txt"><%= article.click_num %> 次浏览  • 0 个关注</p>
+                                                    <p class="text-color-999"><%= article.create_time_ago()%></p>
                                                 </div>
                                             </div>
+                                            <%})%>
                                         </div>
                                     </div>
                                 </div>

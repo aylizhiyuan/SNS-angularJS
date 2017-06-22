@@ -74,6 +74,13 @@ ReplySchema.statics = {
     },
     getReplyById:(id,callback)=>{
         Reply.findOne({'_id':id},callback);
+    },
+    getRepliesByAuthorId:(author_id,opt,callback)=>{
+        Reply.find({author:author_id},{},opt).populate('author').populate('article_id').then(replies=>{
+            return callback(null,replies);
+        }).catch(err=>{
+            return callback(err);
+        })
     }
 }
 ReplySchema.plugin(BaseModel);

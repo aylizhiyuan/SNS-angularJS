@@ -68,11 +68,11 @@ exports.add = (req,res,next)=>{
             })
             return comment;
         }).then((comment)=>{
-            //应该给文章作者发一条消息
+            /*//应该给文章作者发一条消息
             //如果当前登录的用户就是文章的作者，那么留言了不会发送消息
             if(article.author._id.toString() !== req.session.user._id.toString()){
                 message.sendReplyMessage(article.author,req.session.user._id,article._id,reply_id);
-            }
+            }*/
             return comment;
         }).then((comment)=>{
             //再给回复的那个人发条消息，告诉有人回复它了
