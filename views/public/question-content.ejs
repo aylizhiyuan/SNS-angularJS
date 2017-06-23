@@ -2,7 +2,7 @@
 <div class="aw-mod aw-topic-bar">
     <div class="clearfix">
          <span class="topic-tag">
-             <a href="#" class="text"><%= article.categoryName %></a>
+             <a href="/?category=<%= article.category %>" class="text"><%= article.categoryName %></a>
          </span>
     </div>
 </div>
@@ -13,8 +13,8 @@
         <h1><%= article.title %></h1>
         <% if(userInfo){%>
         <div class="operate clearfix">
-            <a href="#" class="follow btn btn-normal btn-success pull-left ">
-                <span>关注</span> <em>|</em> <b>2</b>
+            <a href="javascript:void(0)" target="<%= article._id %>" ng-click="follow_article($event)" class="follow btn btn-normal btn-success pull-left ">
+                <span>关注</span> <em>|</em> <b>0</b>
             </a>
         </div>
         <%}%>

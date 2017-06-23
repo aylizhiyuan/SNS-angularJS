@@ -31,46 +31,32 @@
                             </div>
                         </div>
                         <div class="mod-footer">
-                            <!--暂时不写-->
+                            <ul class="nav nav-tabs aw-nav-tabs hidden-xs">
+                                <li class="active">
+                                    <a href="#questions" data-toggle="tab">
+                                        发问
+                                        <span class="badge"><%= articles.length %></span>
+                                    </a>
+                                </li>
+                                <li class>
+                                    <a href="#replys" data-toggle="tab">
+                                        回复
+                                        <span class="badge"><%= replies.length %></span>
+                                    </a>
+                                </li>
+                                <li class>
+                                    <a href="#focus" data-toggle="tab">关注</a>
+                                </li>
+                                <li class>
+                                    <a href="#actions" data-toggle="tab">动态</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="aw-user-center-tab">
                         <div class="tab-content">
-                            <div class="tab-pane active">
-                                <!--回复-->
-                                <div class="aw-mod">
-                                    <div class="mod-head">
-                                        <h3>
-                                            <a class="pull-right" href="/user/<%= userInfo.name %>/replys">更多</a>
-                                            回复
-                                        </h3>
-                                    </div>
-                                    <div class="mod-body">
-                                        <div class="aw-profile-answer-list">
-                                            <% replies.forEach(function(reply){%>
-                                            <div class="aw-item">
-                                                <div class="mod-head">
-                                                    <h4>
-                                                        <a href="/question/<%= reply.article_id._id %>">
-                                                            <%= reply.article_id.title %>
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="mod-body">
-                                                    <span class="aw-border-radius-5 count pull-left">
-                                                        <i class="fa fa-thumbs-o-up"></i> 0
-                                                    </span>
-                                                    <div class="aw-hide-txt">
-                                                        <%- markdown(reply.content) %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%})%>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--回复-->
-                                <!--提问-->
+                            <!--提问-->
+                            <div class="tab-pane active" id="questions">
                                 <div class="aw-mod">
                                     <div class="mod-head">
                                         <h3>
@@ -104,8 +90,57 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--提问-->
                             </div>
+                            <!--提问-->
+                            <!--回复-->
+                            <div class="tab-pane" id="replys">
+                                <div class="aw-mod">
+                                    <div class="mod-head">
+                                        <h3>
+                                            <a class="pull-right" href="/user/<%= userInfo.name %>/replys">更多</a>
+                                            回复
+                                        </h3>
+                                    </div>
+                                    <div class="mod-body">
+                                        <div class="aw-profile-answer-list">
+                                            <% replies.forEach(function(reply){%>
+                                            <div class="aw-item">
+                                                <div class="mod-head">
+                                                    <h4>
+                                                        <a href="/question/<%= reply.article_id._id %>#<%= reply._id %>">
+                                                            <%= reply.article_id.title %>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div class="mod-body">
+                                                    <span class="aw-border-radius-5 count pull-left">
+                                                        <i class="fa fa-thumbs-o-up"></i> 0
+                                                    </span>
+                                                    <div class="aw-hide-txt">
+                                                        <%- markdown(reply.content) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%})%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--回复-->
+                            <!--关注-->
+                            <div class="tab-pane" id="focus">
+                                <div class="aw-mod">
+
+                                </div>
+                            </div>
+                            <!--关注-->
+                            <!--动态-->
+                            <div class="tab-pane" id="actions">
+                                <div class="aw-mod">
+
+                                </div>
+                            </div>
+                            <!--动态-->
                         </div>
                     </div>
                 </div>

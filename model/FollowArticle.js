@@ -7,11 +7,13 @@ const shortid = requrie('shortid');
 const FollowArticleSchema = new Schema({
     //哪个人
     user_id:{
-        type:String
+        type:String,
+        ref:'User'
     },
     //关注了哪个话题
     article_id:{
-        type:String
+        type:String,
+        ref:'Article'
     }
 })
 const FollowArticle = mongoose.model('FollowArticle',FollowArticleSchema);

@@ -151,6 +151,22 @@ showApp.filter('to_html',['$sce',function ($sce){
     }
 }])
 showApp.controller('showController',($scope,$http)=>{
+    //关注文章
+    $scope.follow_article = (event)=>{
+        let btn = $(event.currentTarget);
+        let article_id = btn.attr('target');
+        $http({
+            method:'POST',
+            url:`/question/follow_article/${article_id}`
+        }).success((data)=>{
+              if(data === 'success'){
+
+                  btn.toggleClass('active');
+              }
+        }).error(err=>{
+            console.log(err);
+        })
+    }
     //删除操作
     $scope.delete = (event)=>{
         let targetA = $(event.currentTarget);

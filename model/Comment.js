@@ -28,6 +28,10 @@ const CommentSchema = new Schema({
         type:String,
         ref:'User'
     },
+    article_id:{
+        type:String,
+        ref:'Article'
+    },
     //二级回复的内容
     content:{
         type:String
@@ -45,7 +49,7 @@ const CommentSchema = new Schema({
 })
 CommentSchema.statics = {
     getCommentsByReplyId:(id,callback)=>{
-        Comment.find({'reply_id':id},'',{sort:'create_time'}).populate('author_id').populate('reply_author_id').then(comments=>{
+        Comment.find({'reply_id':id},'',{sort:'create_time'}).populate('author_id').populate('reply_author_id').populate('article_id').then(comments=>{
             if(comments.length === 0){
                 return callback(null,[]);
             }
